@@ -91,9 +91,31 @@ const deleteProduct = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
+//@desc Search Products based on name or category
+//@router GET /api/products/search/
+//@access Public
+const searchProducts = async (req, res) => {
+  try {
+    const searchQuery = req.body.query;
+    
+    // Search for products by name or category
+    const products = await Product.find({
+      $or: [
+        { title: { $regex: searchQuery, $options: 'i' } },
+        // { category: { $regex: searchQuery, $options: 'i' } }
+        { catagories: { $elemMatch: { $regex: searchQuery, $options: 'i' } } }
+      ]
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error' });
+  }
+};
 module.exports = {
   getProducts,
   setProduct,
+  searchProducts,
   updateProduct,
   deleteProduct,
 };
