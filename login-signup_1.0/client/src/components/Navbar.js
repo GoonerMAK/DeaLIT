@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="container">
-        <Link to="/home">
+        <Link to="/Home,">
           <h1>DeaLIT</h1>
         </Link>
         <nav>
