@@ -1,11 +1,13 @@
-// import { useEffect }from 'react'
+import { useEffect }from 'react'
+import { useProductsContext } from "../hooks/useProductsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
 
+import ProducttForm from '../components/ProductForm'
 
 const Home = () => {
-
+  // const {workouts, dispatch} = useProductsContext()
   const {user} = useAuthContext()
 
   // useEffect(() => {
@@ -29,10 +31,10 @@ const Home = () => {
     <div className="home">
       {/* <div className="workouts">
         {workouts && workouts.map((workout) => (
-          <WorkoutDetails key={workout._id} workout={workout} />
+          <productDetails key={workout._id} workout={workout} />
         ))}
-      </div>
-      <WorkoutForm /> */}
+      </div> */}
+      <ProducttForm />
     </div>
   )
 }
