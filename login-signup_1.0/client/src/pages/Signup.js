@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useSignup } from "../hooks/useSignup"
+import { Link, useLocation } from "react-router-dom";
+
 
 const Signup = () => {
   const [email, setEmail] = useState('')
@@ -18,49 +20,74 @@ const Signup = () => {
   }
 
   return (
-    <form className="signup" onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
-      <label>User name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setUsername(e.target.value)} 
-        value={username} 
-      />
-      <label>Phone No:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setPhone(e.target.value)} 
-        value={Phone} 
-      />
-      <label>NID No:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setNID(e.target.value)} 
-        value={NID} 
-      />
-      <label>Email address:</label>
-      <input 
-        type="email" 
-        onChange={(e) => setEmail(e.target.value)} 
-        value={email} 
-      />
-      <label>Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setPassword(e.target.value)} 
-        value={password} 
-      />
-      <label>Check Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setCheckPassword(e.target.value)} 
-        value={checkpassword} 
-      />
+    <div className="container1">
+    {/* <Navigate to="/Accountverification" /> */}
+        <div className="cover1">
 
-      <button disabled={isLoading}>Sign up</button>
-      {error && <div className="error">{error}</div>}
-    </form>
-  )
+            <form onSubmit={handleSubmit}>
+
+            <h1>Create account</h1>
+ 
+  <input 
+    type="text" 
+    placeholder="Enter username"
+    onChange={(e) => setUsername(e.target.value)} 
+    value={username} 
+  />
+
+ <input 
+    type="number" 
+    placeholder="Enter NID"
+    onChange={(e) => setNID(e.target.value)} 
+    value={NID} 
+  />
+  <input 
+    type="number" 
+    placeholder="Enter Phone"
+    onChange={(e) => setPhone(e.target.value)} 
+    value={Phone} 
+  />
+
+  <input 
+    type="email" 
+    placeholder="Enter email"
+    onChange={(e) => setEmail(e.target.value)} 
+    value={email} 
+  />
+ 
+  <input 
+    type="password" 
+    placeholder="Enter password"
+    onChange={(e) => setPassword(e.target.value)} 
+    value={password} 
+  />
+
+ <input 
+    type="password" 
+    placeholder="Check Password"
+    onChange={(e) => setCheckPassword(e.target.value)} 
+    value={checkpassword} 
+  />
+
+
+<button disabled={isLoading}>Sign up</button>
+
+  <span>
+            Already have an account? 
+                    <Link to="/login" disabled = {isLoading} >Login</Link>
+                </span>
+
+  {error && <div className="error">{error}</div>}
+</form>
+          <div className="pic">
+                <img src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?size=338&ext=jpg&uid=R95233801&ga=GA1.1.1100157101.1672301754&semt=ais
+" alt="fieldWithGrains"></img>
+            </div>
+        </div>
+
+    </div>
+)
+
 }
 
 export default Signup

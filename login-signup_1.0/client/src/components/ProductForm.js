@@ -11,7 +11,7 @@ const ProducttForm = () => {
   const [img, setimg] = useState('')
   const[price, setprice]= useState('')
   const [error, setError] = useState(null)
-  const [emptyFields, setEmptyFields] = useState([])
+  // const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -23,7 +23,7 @@ const ProducttForm = () => {
 
     const workout = {title, desc, img, price}
 
-    const response = await fetch('/api/workouts', {
+    const response = await fetch('/api/products', {
       method: 'POST',
       body: JSON.stringify(workout),
       headers: {
@@ -35,7 +35,7 @@ const ProducttForm = () => {
 
     if (!response.ok) {
       setError(json.error)
-      setEmptyFields(json.emptyFields)
+      // setEmptyFields(json.emptyFields)
     }
     if (response.ok) {
       setTitle('')
@@ -43,8 +43,8 @@ const ProducttForm = () => {
       setprice('')
       setimg('')
       setError(null)
-      setEmptyFields([])
-      dispatch({type: 'CREATE_WORKOUT', payload: json})
+      // setEmptyFields([])
+      dispatch({type: 'CREATE_PRODUCT', payload: json})
     }
   }
 
@@ -57,7 +57,7 @@ const ProducttForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
-        className={emptyFields.includes('title') ? 'error' : ''}
+        // className={emptyFields.includes('title') ? 'error' : ''}
       />
 
       <label>price :</label>
@@ -65,7 +65,7 @@ const ProducttForm = () => {
         type="number"
         onChange={(e) => setprice(e.target.value)}
         value={price}
-        className={emptyFields.includes('load') ? 'error' : ''}
+        // className={emptyFields.includes('load') ? 'error' : ''}
       />
 
       <label>desc:</label>
@@ -73,17 +73,17 @@ const ProducttForm = () => {
         type="text"
         onChange={(e) => setdesc(e.target.value)}
         value={desc}
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        // className={emptyFields.includes('reps') ? 'error' : ''}
       />
       <label>img:</label>
       <input 
         type="text"
         onChange={(e) => setimg(e.target.value)}
         value={img}
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        // className={emptyFields.includes('reps') ? 'error' : ''}
       />
 
-      <button>Add Workout</button>
+      <button>Add Product</button>
       {error && <div className="error">{error}</div>}
     </form>
   )
