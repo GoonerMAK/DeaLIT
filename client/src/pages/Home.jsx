@@ -15,9 +15,11 @@ const Home = () => {
     <div>
       <Announcement/>
       <Navbar/>
-      <Slider/>
-      <Categories/>
       <Products/>
+      <Slider/>
+
+      <Categories/>
+      
       <Newsletter/>
       <Footer/>
     </div>

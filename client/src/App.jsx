@@ -4,7 +4,7 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 
 const App = () => {
-  return <Cart/>
+  return <Home/>
 };
 
 export default App;
