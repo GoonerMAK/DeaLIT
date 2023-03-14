@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useLogin } from "../hooks/useLogin"
+import { Link, useLocation } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -13,25 +14,53 @@ const Login = () => {
   }
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
-      <h3>Log In</h3>
-      
-      <label>Email address:</label>
-      <input 
-        type="email" 
-        onChange={(e) => setEmail(e.target.value)} 
-        value={email} 
-      />
-      <label>Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setPassword(e.target.value)} 
-        value={password} 
-      />
+    <div className="container2">
+      <div className="cover2">
 
-      <button disabled={isLoading}>Log in</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+      <form onSubmit={handleSubmit}>
+
+<h1>Login</h1>
+{error && <span className="error-message">{error}</span>}
+<input
+  type="email"
+  value={email}
+  placeholder="Enter email"
+  onChange={(e) => setEmail(e.target.value)} 
+
+/>
+<input
+  type="password"
+  placeholder="Password"
+  onChange={(e) => setPassword(e.target.value)} 
+  value={password} 
+/>
+
+<button disabled={isLoading}>Log in</button>
+
+
+
+<Link 
+  className="link1" 
+  to="/Forget"
+  tabIndex={4}>
+  Forgot Password ?
+</Link>
+
+
+
+
+<span className="link1">
+  Don't have an account? <Link to="/Register" tabIndex={5}>Register</Link>
+</span>
+
+
+
+        </form>
+        <div className="pic">
+                    <img src="https://img.freepik.com/free-vector/computer-login-concept-illustration_114360-7962.jpg?size=338&ext=jpg&uid=R95233801&ga=GA1.1.1100157101.1672301754&semt=ais" alt="fieldWithGrains"></img>
+                </div>
+      </div>
+    </div>
   )
 }
 
