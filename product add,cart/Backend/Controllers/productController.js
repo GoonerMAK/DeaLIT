@@ -16,13 +16,13 @@ const getProducts = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private
 const setProduct = asyncHandler(async (req, res) => {
-  if (!req.body.productName) {
+  if (!req.body.title) {
     res.status(400);
     throw new Error("Please add a product");
   }
 
   const product = await Product.create({
-    title: req.body.Title,
+    title: req.body.title,
     description: req.body.description,
     image: req.body.image,
     catagories: req.body.catagories,
