@@ -21,6 +21,8 @@ const setProduct = asyncHandler(async (req, res) => {
     throw new Error("Please add a product");
   }
 
+  const user = await User.findById(req.user.id);
+
   const product = await Product.create({
     title: req.body.title,
     description: req.body.description,
@@ -28,6 +30,7 @@ const setProduct = asyncHandler(async (req, res) => {
     catagories: req.body.catagories,
     price: req.body.price,
     user: req.user.id,
+    username: user.name,
   });
 
   res.status(200).json(product);
