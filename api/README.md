@@ -17,3 +17,9 @@
 4. npm install jsonwebtoken
     
     JWT implementation (making tings more secure)
+
+
+5. npm install axios
+
+
+6. npm install cors 

@@ -26,18 +26,21 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://i.ibb.co/XsdmR2c/1.png",
-      title: "ELECTRONICS",
+      img: "https://i.ibb.co/0YCzPT5/electronics1.png",
+      title: "BUY ITEMS",
+      cat:"ELECTRONICS",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/XsdmR2c/1.png",
-      title: "HOME APPLIANCES",
+      img: "https://i.ibb.co/Mh2Gfyp/camera1.png",
+      title: "RENT ITEMS",
+      cat:"HOME APPLIANCES",
     },
     {
       id: 3,
       img: "https://i.ibb.co/XsdmR2c/1.png",
-      title: "CLOTHINGS",
+      title: "TRADE ITEMS",
+      cat:"CLOTHINGS",
     },
   ];
 

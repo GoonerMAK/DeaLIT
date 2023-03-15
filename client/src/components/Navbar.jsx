@@ -2,6 +2,7 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined  } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -40,8 +41,9 @@ const Input = styled.input`
   font-size: 15px;
 `;
 
-const Logo = styled.h1`
+const Logo = styled.div`
   font-weight: bold;
+  position: relative;
 `;
 
 
@@ -78,7 +80,7 @@ const Navbar = () => {
 
                 <Center>
                     <Logo>
-                        Deal It
+                        <img src="https://i.ibb.co/7XVRBS4/logo-spl.png" alt="logo" />
                     </Logo>
                 </Center>
 
@@ -87,7 +89,11 @@ const Navbar = () => {
                     <MenuItem>SIGN IN</MenuItem>
                     <MenuItem>
                         <Badge badgeContent={0} color="primary">
+
+                        <Link to="./Cart">
                         <ShoppingCartOutlined />
+                        </Link>
+                        
                         </Badge>
                     </MenuItem>
                 </Right>
