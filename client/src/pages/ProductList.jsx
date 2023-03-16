@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components"
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -36,6 +38,23 @@ const Option = styled.option``;
 
 
 const ProductList = () => {
+
+  const location = useLocation();
+  // console.log(location.pathname.split("/")[2]);
+  const cat = location.pathname.split("/")[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState("newest");
+
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
+  };
+  // console.log(filters)
+  
+  
   return (
     <Container>
         <Announcement/>
@@ -45,7 +64,8 @@ const ProductList = () => {
       <FilterContainer>
         <Filter>
           <FilterText>Filter :</FilterText>
-          <Select>
+
+          <Select name="Categories" onChange={handleFilters}>
             <Option disabled selected>
               Categories
             </Option>
@@ -58,7 +78,8 @@ const ProductList = () => {
             <Option>Education</Option>
             <Option>Others</Option>
           </Select>
-          <Select>
+
+          <Select name="Location" onChange={handleFilters}>
             <Option disabled selected>
               Location
             </Option>
@@ -74,16 +95,18 @@ const ProductList = () => {
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Oldest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+          
+          <Select onChange={(e) => setSort(e.target.value)}>
+            <Option value="newest">Newest</Option>
+            <Option value="oldest">Oldest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>
         
-        <Products/>
+        <Products cat={cat} filters={filters} sort={sort} />
+
         <Newsletter/>
         <Footer/>
     </Container>

@@ -1,9 +1,12 @@
 import { Add, Remove } from "@material-ui/icons";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div``;
 
@@ -111,6 +114,27 @@ const Button = styled.button`
 
 
 const Product = () => {
+
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  // const dispatch = useDispatach();
+
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+      } catch {}
+    };
+    getProduct();
+  }, [id]);
+
+  
   return (
     <Container>
       <Announcement />
@@ -118,11 +142,11 @@ const Product = () => {
 
       <Wrapper>
         <ImgContainer>
-          <Image src="https://www.burdastyle.com/pub/media/catalog/product/cache/7bd3727382ce0a860b68816435d76e26/107/BUS-PAT-BURTE-1320516/1170x1470_BS_2016_05_132_front.png" />
+          <Image src={product.img} />
         </ImgContainer>
 
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>{product.title}</Title>
           <Desc>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
@@ -130,7 +154,7 @@ const Product = () => {
             tristique tortor pretium ut. Curabitur elit justo, consequat id
             condimentum ac, volutpat ornare.
           </Desc>
-          <Price>1200/=</Price>
+          <Price>{product.price}/=</Price>
 
           <FilterContainer>
             <Filter>
@@ -139,7 +163,7 @@ const Product = () => {
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
             </Filter>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
                 <FilterSizeOption>XS</FilterSizeOption>
@@ -148,7 +172,7 @@ const Product = () => {
                 <FilterSizeOption>L</FilterSizeOption>
                 <FilterSizeOption>XL</FilterSizeOption>
               </FilterSize>
-            </Filter>
+            </Filter> */}
           </FilterContainer>
 
           <AddContainer>

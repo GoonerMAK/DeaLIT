@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import styled from "styled-components"
 import { categories } from "../data"
 
@@ -40,18 +41,23 @@ const Button = styled.button`
     color:gray;
     cursor: pointer;
     font-weight: 600;
+    width: 150%;
+    justify-content: center;
 `;
 
 
 const CategoryItem = ({item}) => {
   return (
     <Container>
-        <Image src={item.img} />
-        <Info>
-            <Title>{item.title}</Title>
-            <Button>BUY NOW</Button>
-        </Info>
-
+      
+      <Image src={item.img} />
+      <Info>
+          <Title>{item.title}</Title>
+          <Link to={`/products/${item.cat}`}>
+          <Button>GO</Button>
+          </Link>
+      </Info>
+      
     </Container>
   )
 }

@@ -8,6 +8,7 @@ const authRoute = require("./routes/auth")
 const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ dotenv.config();
 //     console.log("test is successful");
 // }); 
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);   // whenever we go to "/api/users" our application will use userRoute 
