@@ -2,24 +2,24 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "https://i.ibb.co/XsdmR2c/1.png",
+      img: "https://img.freepik.com/free-photo/modern-stationary-collection-arrangement_23-2149309643.jpg?w=740&t=st=1678795943~exp=1678796543~hmac=034898cb06abaf2ab236314e45cb404e33cd7a5eba6288a12c9ed55fbc2c2ed7",
       title: "ELECTRONICS",
       desc: "ABUNDENCE OF NEW COLLECTIONS",
-      bg: "f5fafd",
+      bg: "fbf0f4",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/XsdmR2c/1.png",
+      img: "https://img.freepik.com/free-vector/realistic-display-smartphone-with-different-apps_52683-30241.jpg?w=740&t=st=1678796089~exp=1678796689~hmac=a5aff4c2bee2d5abb3934a4b679623218c166f7930bf714e699ca83dbd910a88",
       title: "NEW ITEMS ADDED!",
       desc: "FRESHLY ADDED COLLECTIONS. CHECK THEM OUT",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "https://i.ibb.co/XsdmR2c/1.png",
+      img: "https://www.vippng.com/png/detail/183-1832594_electronics-items-images-hd.png",
       title: "DAILY NEEDS!",
       desc: "WHATEVER YOU MIGHT NEED, WE HAVE IT",
-      bg: "fbf0f4",
+      bg: "f5fafd",
     },
   ];
 
@@ -38,7 +38,11 @@ export const sliderItems = [
     },
     {
       id: 3,
+<<<<<<< Updated upstream
       img: "https://i.ibb.co/XsdmR2c/1.png",
+=======
+      img: "https://i.ibb.co/d0WQnCx/cook1.png",
+>>>>>>> Stashed changes
       title: "TRADE ITEMS",
       cat:"CLOTHINGS",
     },

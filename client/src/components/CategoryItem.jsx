@@ -45,6 +45,13 @@ const Button = styled.button`
     justify-content: center;
 `;
 
+const Circle = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: black;
+  opacity: 20%;
+`;
 
 const CategoryItem = ({item}) => {
   return (
@@ -52,9 +59,18 @@ const CategoryItem = ({item}) => {
       
       <Image src={item.img} />
       <Info>
+<<<<<<< Updated upstream
           <Title>{item.title}</Title>
           <Link to={`/products/${item.cat}`}>
           <Button>GO</Button>
+=======
+          <Title>{item.title} </Title>
+          <Link to={`/products/${item.cat}`}>
+          
+          <Button>GO</Button>
+          
+          
+>>>>>>> Stashed changes
           </Link>
       </Info>
       
