@@ -23,11 +23,9 @@ const Container = styled.div`
   flex: 1;
   margin: 5px;
   min-width: 330px;
-<<<<<<< Updated upstream
-  height: 300px;
-=======
+
   height: 330px;
->>>>>>> Stashed changes
+
   display: flex;
   align-items: center;
   justify-content: center;

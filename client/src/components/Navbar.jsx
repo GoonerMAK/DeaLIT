@@ -3,6 +3,9 @@ import { Search, ShoppingCartOutlined  } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../hooks/useLogout'
+
 
 
 const Container = styled.div`
@@ -67,6 +70,13 @@ const Right = styled.div`
 
 
 const Navbar = () => {
+  const { logout } = useLogout()
+  const { user } = useAuthContext()
+
+  const handleClick = () => {
+    logout()
+  }
+
     return (
         <Container>
             <Wrapper>
@@ -85,8 +95,25 @@ const Navbar = () => {
                 </Center>
 
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
+                <MenuItem>
+
+                {user && (
+                  <div>
+                  <span>{user.email}</span>
+                  <button onClick={handleClick}>Log out</button>
+                  </div>
+                )}
+                {!user && (
+                <MenuItem>
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Signup</Link>
+                </MenuItem>
+                )}
+                  {/* <Link to="/signup">Register</Link>
+                  <Link to="/login"> LogIN </Link> */}
+                    {/* <MenuItem>REGISTER</MenuItem>
+                    <MenuItem>SIGN IN</MenuItem> */}
+                    </MenuItem>
                     <MenuItem>
                         <Badge badgeContent={0} color="primary">
 

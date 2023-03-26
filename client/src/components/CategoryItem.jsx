@@ -59,18 +59,16 @@ const CategoryItem = ({item}) => {
       
       <Image src={item.img} />
       <Info>
-<<<<<<< Updated upstream
+      
           <Title>{item.title}</Title>
           <Link to={`/products/${item.cat}`}>
           <Button>GO</Button>
-=======
+
           <Title>{item.title} </Title>
           <Link to={`/products/${item.cat}`}>
           
           <Button>GO</Button>
           
-          
->>>>>>> Stashed changes
           </Link>
       </Info>
       

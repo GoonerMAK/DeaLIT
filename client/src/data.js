@@ -38,11 +38,7 @@ export const sliderItems = [
     },
     {
       id: 3,
-<<<<<<< Updated upstream
-      img: "https://i.ibb.co/XsdmR2c/1.png",
-=======
       img: "https://i.ibb.co/d0WQnCx/cook1.png",
->>>>>>> Stashed changes
       title: "TRADE ITEMS",
       cat:"CLOTHINGS",
     },
