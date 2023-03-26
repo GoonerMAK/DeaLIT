@@ -5,19 +5,17 @@ import ProductList from "./pages/ProductList";
 import { useAuthContext } from './hooks/useAuthContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Addition from "./pages/Addition";
 
 
 import { BrowserRouter as Router, Routes, Route, Redirect,Navigate } from "react-router-dom";
 
 
 
-import { BrowserRouter as Router, Routes, Route, Redirect, } from "react-router-dom";
-
 const App = () => {
 
 
    const { user } = useAuthContext()
-
   
   return (
     <Router>
@@ -36,7 +34,6 @@ const App = () => {
 
         </Route>
 
-
         <Route 
               path="/login" 
               // element={<Login /> } 
@@ -46,8 +43,10 @@ const App = () => {
               path="/signup"
               // element={<Signup /> } 
               element={!user ? <Signup /> : <Navigate to="/" />} 
-         > </Route>  
-
+         > </Route>
+        
+        <Route path="/addition" element={<Addition/>}></Route>
+        
 
         {/* <Route path="/success">
           <Success />
