@@ -7,11 +7,9 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 
 
-import { BrowserRouter as Router, Routes, Route, Redirect,Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Redirect, Navigate } from "react-router-dom";
 
 
-
-import { BrowserRouter as Router, Routes, Route, Redirect, } from "react-router-dom";
 
 const App = () => {
 
