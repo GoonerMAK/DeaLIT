@@ -28,19 +28,19 @@ export const sliderItems = [
       id: 1,
       img: "https://i.ibb.co/0YCzPT5/electronics1.png",
       title: "BUY ITEMS",
-      cat:"ELECTRONICS",
+      cat:"Exchange",
     },
     {
       id: 2,
       img: "https://i.ibb.co/Mh2Gfyp/camera1.png",
       title: "RENT ITEMS",
-      cat:"HOME APPLIANCES",
+      cat:"Rent",
     },
     {
       id: 3,
       img: "https://i.ibb.co/d0WQnCx/cook1.png",
       title: "TRADE ITEMS",
-      cat:"CLOTHINGS",
+      cat:"Sell",
     },
   ];
 

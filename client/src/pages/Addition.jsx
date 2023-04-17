@@ -32,7 +32,7 @@ const Addition = ()=>{
     }
     return(
     <container>
-    <Navbar/>
+    {/* <Navbar/> */}
         
         <div>
         <select  value={selected} onChange={handleselect}>

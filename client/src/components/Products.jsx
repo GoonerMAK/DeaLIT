@@ -20,12 +20,14 @@ const Products = ({cat, filters, sort}) => {
 
   // when the category changes
   useEffect(() => {
+    console.log(cat)
     const getProducts = async () => {
       try {
         const res = await axios.get(
-          cat
-            ? `http://localhost:5000/api/products?categories=${cat}`        // the attribute name : categories
-            : "http://localhost:5000/api/products"
+          `http://localhost:3000/api/products?categories=${cat}`
+          // cat
+          //   ? `http://localhost:3000/api/products?categories=${cat}`        // the attribute name : categories
+          //   : "http://localhost:3000/api/products"
         );
         // console.log(res);
         setProducts(res.data);

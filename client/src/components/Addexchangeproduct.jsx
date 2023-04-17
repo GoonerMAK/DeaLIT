@@ -1,7 +1,20 @@
 import { useState } from "react"
 import Select from "react-select";
+import styled from "styled-components";
 import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
+
+
+const Input= styled.input`
+  margin-top: 10px;
+  border: none;
+  background-color: #e5e2e2;
+  width: 10%;
+  height: 0.01em;
+  border-radius: 0.25em;
+  text-align: center;
+  padding: 2em;
+`;
 
 const Addexchangeproduct = ()=>{
     const { user } = useAuthContext()
@@ -12,6 +25,7 @@ const Addexchangeproduct = ()=>{
     const [categories, setcategories]=useState()
     const [error, setError] = useState(null)
     const [exchangetype, setexchangetype] = useState('')
+    // const formData=new formData(); 
 
     const optionList=[{value:"Electronics", label:"Electronics"},
   {value:"Daily use", label:"Daily use"}
@@ -21,17 +35,47 @@ const Addexchangeproduct = ()=>{
         setcategories(data);
     }
 
+    const handleimage= (e)=>{
+
+      var fileObject = e.target.files[0];
+
+      var newObject  = {
+        'lastModified'     : fileObject.lastModified,
+        'lastModifiedDate' : fileObject.lastModifiedDate,
+        'name'             : fileObject.name,
+        'size'             : fileObject.size,
+        'type'             : fileObject.type
+     };  
+
+    console.log(fileObject.name)
+    setimg(fileObject.name)
+    }
+    
     const handleSubmit=  (e)=>{
         e.preventDefault()
         //add to the backend part 
+        console.log(img)
+        const formData = new FormData()
         const user_email= user.email
-         axios.post('http://localhost:3000/api/Addition/addexchange', {
-          user_email, title, desc, img, preference, categories, exchangetype
+        formData.append("user_email",user_email)
+        formData.append("title",title)
+        formData.append("desc",desc)
+        formData.append("img",img)
+        formData.append("preference",preference)
+        formData.append("categories",categories)
+        formData.append("exchangetype", exchangetype)
+        
+
+        console.log(formData)
+        console.log(formData.get(img))
+         axios.post('http://localhost:3000/api/Addition/addexchange', //formData
+          {user_email, title, desc, img, preference, categories, exchangetype
         }, {
           headers:{
-            'Content-Type': 'application/json'  //, 'Authorization': `Bearer ${user.token}`
+            'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
           }
-        }).then((response)=>{
+        }
+        ).then((response)=>{
           console.log(response)
           setTitle('')
           setdesc('')
@@ -54,42 +98,47 @@ const Addexchangeproduct = ()=>{
     }
 
     return (
-    <form className="exchange" onSubmit={handleSubmit}> 
+    <form className="exchange" onSubmit={handleSubmit} encType='multipart/form-data'> 
         <h3>Add a New Product For exchange</h3>
 
         <label>Product Title:</label>
-        <input 
+        <Input 
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
         // className={emptyFields.includes('title') ? 'error' : ''}
         />
       <label>desc:</label>
-      <input 
+    
+      <Input 
         type="text"
         onChange={(e) => setdesc(e.target.value)}
         value={desc}
         // className={emptyFields.includes('reps') ? 'error' : ''}
       />
+      
       <label>Preference :</label>
-      <input 
+      <Input 
         type="text"
         onChange={(e) => setprefer(e.target.value)}
         value={preference}
         // className={emptyFields.includes('load') ? 'error' : ''}
       />
       <select value={exchangetype} onChange={e => setexchangetype(e.target.value)}>
-        <option>Temporary</option>
-        <option>Parmanent</option>
+        <option>chose</option>
+        <option value="Tempory">Temporary</option>
+        <option value="Paramanent">Parmanent</option>
       </select>
 
 
       
       <label>img:</label>
       <input 
-        type="text"
-        onChange={(e) => setimg(e.target.value)}
-        value={img}
+        type="file"
+        name="photos"
+        onChange={handleimage}
+        className="form-control-file"
+        multiple
         // className={emptyFields.includes('reps') ? 'error' : ''}
       />
       <div className="dropdown-container">

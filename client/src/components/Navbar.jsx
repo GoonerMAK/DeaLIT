@@ -89,7 +89,7 @@ const Navbar = () => {
 
                 <Center>
                     <Logo>
-                        <img src="https://i.ibb.co/7XVRBS4/logo-spl.png" alt="logo" />
+                        {/* <img src="https://i.ibb.co/7XVRBS4/logo-spl.png" alt="logo" /> */}
                     </Logo>
                 </Center>
 
