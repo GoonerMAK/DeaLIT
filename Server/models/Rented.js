@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const rentrequestSchema = new mongoose.Schema(
+const rentSchema = new mongoose.Schema(
   {
     owner_email: {
         type: String,
@@ -12,11 +12,9 @@ const rentrequestSchema = new mongoose.Schema(
       },
     objectid:{type: String},
     return_date:{type: Date},
-    owner_verify:{type: Boolean},
-    sender_verify:{type:Boolean},
-    proposed_price:{type:Number}
+    rent_price:{type:Number}
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("rentrequests", rentrequestSchema);
+module.exports = mongoose.model("rented", rentSchema);

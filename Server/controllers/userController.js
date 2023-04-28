@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const mailsender= require('./mailsender')
 
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -28,6 +29,7 @@ const signupUser = async (req, res) => {
 
   try {
     const user = await User.signup(username, Phone, NID, email, password, checkpassword)
+    await mailsender(email)
 
     // create a token
     const token = createToken(user._id)
@@ -38,4 +40,27 @@ const signupUser = async (req, res) => {
   }
 }
 
-module.exports = { signupUser, loginUser }
+const verifymail = async (req, res) => {
+  const token=req.params.token
+  const email=req.params.email
+  console.log(token)
+  console.log(email)
+  var check=false
+  jwt.verify(token, process.env.MAILSECRET, function(err, decoded){
+    if(err){
+      console.log(err)
+      res.send("Email varification failed")
+    }else{
+      res.send("Email is varified")
+      check=true
+    }
+  })
+  console.log(check)
+  if(check){
+    console.log("came in to loop")
+    await User.updateOne({email:email}, {$set:{ verfied:true}})
+  }
+  
+}
+
+module.exports = { signupUser, loginUser, verifymail }
