@@ -10,6 +10,7 @@ const Addsell= ()=>{
     const [desc, setdesc] = useState('')
     const [img, setimg] = useState('')
     const[price, setprice]= useState('')
+    const [imgfile, setimgfile]=useState('')
     const [categories, setcategories]=useState()
     const [error, setError] = useState(null)
 
@@ -21,19 +22,25 @@ const Addsell= ()=>{
         setcategories(data);
     }
     const handleimage= (e)=>{
+      e.preventDefault()
+      // const formData = new FormData()
 
       var fileObject = e.target.files[0];
+      setimgfile(fileObject);
+    }
+    const handleimagesave=()=>{
+      const formData = new FormData()
+        formData.append("file", imgfile)
+        formData.append("upload_preset", "Product_image")
 
-      var newObject  = {
-        'lastModified'     : fileObject.lastModified,
-        'lastModifiedDate' : fileObject.lastModifiedDate,
-        'name'             : fileObject.name,
-        'size'             : fileObject.size,
-        'type'             : fileObject.type
-     };  
-
-    console.log(fileObject.name)
-    setimg(fileObject.name)
+        axios.post(
+          "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
+          .then((response) => {
+            console.log(response);
+            setimg(response.data.secure_url);
+            }).catch((error) => {
+              console.log(error);
+          })
     }
 
     const handleSubmit = async (e) => {
@@ -61,6 +68,7 @@ const Addsell= ()=>{
         setError(null)
         setcategories('')
         setprice('')
+        setimgfile('')
       }).catch((error)=>{
         if (error.response) {
           console.log(error.response);

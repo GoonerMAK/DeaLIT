@@ -9,6 +9,7 @@ const Addrent= ()=>{
     const { user } = useAuthContext()
     const [title, setTitle] = useState('')
     const [desc, setdesc] = useState('')
+    const [imgfile, setimgfile]=useState('')
     const [img, setimg] = useState('')
     const[price, setprice]= useState('')
     const[prefer, setprefer]= useState('')
@@ -24,20 +25,27 @@ const Addrent= ()=>{
     }
 
     const handleimage= (e)=>{
+      e.preventDefault()
+      // const formData = new FormData()
 
       var fileObject = e.target.files[0];
-
-      var newObject  = {
-        'lastModified'     : fileObject.lastModified,
-        'lastModifiedDate' : fileObject.lastModifiedDate,
-        'name'             : fileObject.name,
-        'size'             : fileObject.size,
-        'type'             : fileObject.type
-     };  
-
-    console.log(fileObject.name)
-    setimg(fileObject.name)
+      setimgfile(fileObject);
     }
+    const handleimagesave=()=>{
+      const formData = new FormData()
+        formData.append("file", imgfile)
+        formData.append("upload_preset", "Product_image")
+
+        axios.post(
+          "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
+          .then((response) => {
+            console.log(response);
+            setimg(response.data.secure_url);
+            }).catch((error) => {
+              console.log(error);
+          })
+    }
+    
 
     const handleSubmit = async (e) => {
       e.preventDefault()
@@ -47,7 +55,7 @@ const Addrent= ()=>{
       const user_email= user.email
       
       
-
+      handleimagesave()
       // console.log(formData)
       // console.log(formData.get(img))
        axios.post('http://localhost:3000/api/Addition/addrent', //formData
@@ -66,6 +74,7 @@ const Addrent= ()=>{
         setError(null)
         setcategories('')
         setprice('')
+        setimgfile('')
       }).catch((error)=>{
         if (error.response) {
           console.log(error.response);

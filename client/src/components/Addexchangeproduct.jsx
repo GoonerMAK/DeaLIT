@@ -20,6 +20,7 @@ const Addexchangeproduct = ()=>{
     const { user } = useAuthContext()
     const [title, setTitle] = useState('')
     const [desc, setdesc] = useState('')
+    const [imgfile, setimgfile]=useState('')
     const [img, setimg] = useState('')
     const[preference, setprefer]= useState('')
     const [categories, setcategories]=useState()
@@ -36,38 +37,45 @@ const Addexchangeproduct = ()=>{
     }
 
     const handleimage= (e)=>{
+      e.preventDefault()
+      // const formData = new FormData()
 
       var fileObject = e.target.files[0];
+      setimgfile(fileObject);
+    }
+    const handleimagesave=()=>{
+      const formData = new FormData()
+        formData.append("file", imgfile)
+        formData.append("upload_preset", "Product_image")
 
-      var newObject  = {
-        'lastModified'     : fileObject.lastModified,
-        'lastModifiedDate' : fileObject.lastModifiedDate,
-        'name'             : fileObject.name,
-        'size'             : fileObject.size,
-        'type'             : fileObject.type
-     };  
-
-    console.log(fileObject.name)
-    setimg(fileObject.name)
+        axios.post(
+          "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
+          .then((response) => {
+            console.log(response);
+            setimg(response.data.secure_url);
+            }).catch((error) => {
+              console.log(error);
+          })
     }
     
     const handleSubmit=  (e)=>{
         e.preventDefault()
         //add to the backend part 
         console.log(img)
-        const formData = new FormData()
-        const user_email= user.email
-        formData.append("user_email",user_email)
-        formData.append("title",title)
-        formData.append("desc",desc)
-        formData.append("img",img)
-        formData.append("preference",preference)
-        formData.append("categories",categories)
-        formData.append("exchangetype", exchangetype)
+        
+        handleimagesave()
+         const user_email= user.email
+        // formData.append("user_email",user_email)
+        // formData.append("title",title)
+        // formData.append("desc",desc)
+        // formData.append("img",img)
+        // formData.append("preference",preference)
+        // formData.append("categories",categories)
+        // formData.append("exchangetype", exchangetype)
         
 
-        console.log(formData)
-        console.log(formData.get(img))
+        // console.log(formData)
+        // console.log(formData.get(img))
          axios.post('http://localhost:3000/api/Addition/addexchange', //formData
           {user_email, title, desc, img, preference, categories, exchangetype
         }, {
@@ -84,6 +92,7 @@ const Addexchangeproduct = ()=>{
           setError(null)
           setcategories('')
           setexchangetype('')
+          setimgfile('')
         }).catch((error)=>{
           if (error.response) {
             console.log(error.response);
