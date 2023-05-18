@@ -1,7 +1,7 @@
 const express = require('express')
 
 // controller functions
-const { loginUser, signupUser, verifymail } = require('../controllers/userController')
+const { loginUser, signupUser, verifymail, find } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -12,5 +12,7 @@ router.post('/login', loginUser)
 router.post('/signup', signupUser)
 
 router.get('/verify/:email/:token', verifymail)
+
+router.get("/find/:id", find) 
 
 module.exports = router

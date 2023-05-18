@@ -50,7 +50,7 @@ const Addrent= ()=>{
     const handleSubmit = async (e) => {
       e.preventDefault()
       //add to the backend part 
-      console.log(img)
+      console.log(user._id)
       //const formData = new FormData()
       const user_email= user.email
       

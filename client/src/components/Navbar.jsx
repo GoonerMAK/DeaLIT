@@ -71,6 +71,7 @@ const Right = styled.div`
 const Navbar = () => {
   const { logout } = useLogout()
   const { user } = useAuthContext()
+  console.log(user)
 
   const handleClick = () => {
     logout()

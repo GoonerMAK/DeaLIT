@@ -6,6 +6,8 @@ import { useAuthContext } from './hooks/useAuthContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Addition from "./pages/Addition";
+import Messenger from "./pages/messenger/Messenger";
+
 
 
 import { BrowserRouter as Router, Routes, Route, Redirect,Navigate } from "react-router-dom";
@@ -45,7 +47,11 @@ const App = () => {
               element={!user ? <Signup /> : <Navigate to="/" />} 
          > </Route>
         
-        <Route path="/addition" element={<Addition/>}></Route>
+        <Route path="/addition" element={ <Addition/> }></Route>
+
+        <Route path="/messege"
+          element={  <Messenger />}>
+        </Route>
         
 
         {/* <Route path="/success">

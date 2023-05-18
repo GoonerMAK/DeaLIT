@@ -5,11 +5,13 @@ import Addrent from "../components/Addrent";
 import Navbar from "../components/Navbar";
 
 
+
 const Addition = ()=>{
     const[selected, setselected]=useState('')
     const[exchange, setexchange]=useState('')
     const[sell, setsell]= useState('')
     const[rent, setrent]=useState('')
+    
 
     const handleselect = (e)=>{
         setselected(e.target.value)
@@ -32,7 +34,7 @@ const Addition = ()=>{
     }
     return(
     <container>
-    {/* <Navbar/> */}
+    <Navbar/>
         
         <div>
         <select  value={selected} onChange={handleselect}>

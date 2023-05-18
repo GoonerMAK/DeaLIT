@@ -16,7 +16,8 @@ const loginUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({email, token})
+    res.status(200).json({email, token, user})
+    
     //cookie implement
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -34,7 +35,7 @@ const signupUser = async (req, res) => {
     // create a token
     const token = createToken(user._id)
 
-    res.status(200).json({email, token})
+    res.status(200).json({email, token,user})
   } catch (error) {
     res.status(400).json({error: error.message})
   }
@@ -63,4 +64,13 @@ const verifymail = async (req, res) => {
   
 }
 
-module.exports = { signupUser, loginUser, verifymail }
+const find= async(req, res) => {
+  try {
+    console.log("user find")
+  const user = await User.findById(req.params.id);
+  res.status(200).json(user);
+} catch (err) {
+  res.status(500).json(err);
+}
+}
+module.exports = { signupUser, loginUser, verifymail, find }
