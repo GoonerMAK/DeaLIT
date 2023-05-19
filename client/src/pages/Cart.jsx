@@ -1,12 +1,8 @@
-import React from "react";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 
@@ -147,13 +143,9 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
-  cursor : pointer;
 `;
 
 const Cart = () => {
-
-  const cart = useSelector((state) => state.cart);
-
   return (
     <Container>
       <Announcement />
@@ -164,53 +156,77 @@ const Cart = () => {
         <Title>YOUR BAG</Title>
 
         <Top>
-          <Link to= "/ProductList" >                  
-            <TopButton>CONTINUE SHOPPING</TopButton>
-          </Link>
+          <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHAT WITH OWNER</TopButton>
+          <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
 
         <Bottom>
 
           <Info>
 
-            {cart.products.map((product)=>(
-            
-              <Product>
+            <Product>
 
               <ProductDetail>
-                <Image src={product.img} />
+                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
                 <Details>
                   <ProductName>
-                    <b>Product:</b> {product.title}
+                    <b>Product:</b> JESSIE THUNDER SHOES
                   </ProductName>
                   <ProductId>
-                    <b>ID:</b> {product.id}
+                    <b>ID:</b> 93813718293
                   </ProductId>
                   <ProductColor color="black" />
                   <ProductSize>
-                    <b>Size:</b> A
+                    <b>Size:</b> 37.5
                   </ProductSize>
                 </Details>
               </ProductDetail>
-              
+
               <PriceDetail>
                 <ProductAmountContainer>
-                  <ProductAmount> Quantity: {product.quantity} </ProductAmount>
+                  <Add />
+                  <ProductAmount>2</ProductAmount>
+                  <Remove />
                 </ProductAmountContainer>
-                <ProductPrice> {product.price*product.quantity} /=</ProductPrice>
+                <ProductPrice>$ 30</ProductPrice>
               </PriceDetail>
-            
+
             </Product>
 
-            ))}
+            <Hr />
 
-            
+            <Product>
 
+              <ProductDetail>
+                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
+                <Details>
+                  <ProductName>
+                    <b>Product:</b> HAKURA T-SHIRT
+                  </ProductName>
+                  <ProductId>
+                    <b>ID:</b> 93813718293
+                  </ProductId>
+                  <ProductColor color="gray" />
+                  <ProductSize>
+                    <b>Size:</b> M
+                  </ProductSize>
+                </Details>
+              </ProductDetail>
+
+              <PriceDetail>
+                <ProductAmountContainer>
+                  <Add />
+                  <ProductAmount>1</ProductAmount>
+                  <Remove />
+                </ProductAmountContainer>
+                <ProductPrice>$ 20</ProductPrice>
+              </PriceDetail>
+
+            </Product>
 
           </Info>
 
@@ -219,14 +235,21 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
+              <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-           
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping</SummaryItemText>
+              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+            </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
+              <SummaryItemPrice>$ 80</SummaryItemPrice>
             </SummaryItem>
-            <Button>PROCEED NOW</Button>
+            <Button>CHECKOUT NOW</Button>
           </Summary>
 
         </Bottom>

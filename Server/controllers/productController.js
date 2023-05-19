@@ -1,6 +1,7 @@
 const Product = require('../models/Products')
 const mongoose = require('mongoose')
 const Rentrequest= require('../models/rentrequest')
+const Exchangerequest= require('../models/exchange_request')
 
 
 
@@ -39,8 +40,8 @@ const addexchangeProduct = async (req, res) => {
   // const exchangetype = req.body.exchangetype
   // const img = req.files.originalname
   const {user_email, title,desc ,img, preference, categories, exchangetype} = req.body //, categories
-  console.log(req.body)
-  // console.log(req)
+  // console.log(req.body)
+  
  
  
    console.log(user_email, title,desc,img, preference, categories, exchangetype)
@@ -96,7 +97,27 @@ const addrentProduct = async (req, res) => {
 
 //sent request for exchange
 const exchangerequest = async (req, res) => {
-  const {} = req.body
+  const {title, desc, img,owner_id, sender_id, object_id } = req.body
+  var return_date=req.body.return_date
+  // return_date= new Date(return_date)
+  const owner_verify =false
+  const sender_verify = false
+  console.log(req.body)
+  if(!owner_id|| !sender_id|| !object_id|| !title || !desc){
+    return res.status(400).json({ error: 'Please fill in all the fields' })
+  }
+  try {
+    // const user_id = req.user._id
+    
+    const exchangerequest = await Exchangerequest.create({title,desc,img,owner_id, sender_id, object_id, return_date, owner_verify, sender_verify})
+    console.log(exchangerequest) //, categories
+    res.status(200).json(exchangerequest)
+    console.log("Exchange kaj korse")
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+
+
 }
 
 const rentngerequest = async (req, res) => {
@@ -129,5 +150,6 @@ module.exports = {
   addsellProduct,
   addexchangeProduct,
   addrentProduct,
-  rentngerequest
+  rentngerequest,
+  exchangerequest
 }

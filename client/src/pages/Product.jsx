@@ -1,14 +1,14 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation , Link} from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { publicRequest } from "../requestMethods";
-import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import Exchangerequest from "../components/Exchangerequest"
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -89,7 +89,6 @@ const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
-  cursor : pointer;
 `;
 
 const Amount = styled.span`
@@ -101,7 +100,6 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
-  cursor : text;
 `;
 
 const Button = styled.button`
@@ -116,25 +114,6 @@ const Button = styled.button`
   }
 `;
 
-const Arrow = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: #fff7f7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: ${(props) => props.direction === "left" && "10px"};
-  right: ${(props) => props.direction === "right" && "10px"};
-  margin: auto;
-  cursor: pointer;
-  opacity: 0.5;
-  z-index: 2;
-`;
-
 
 const Product = () => {
 
@@ -144,7 +123,10 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
-  const dispatch = useDispatch();
+  const [isexchange, setisexchange]= useState(false)
+  const [isrent, setisrent]= useState(false)
+  const [owner, setowner]=useState('')
+  // const dispatch = useDispatach();
 
 
   useEffect(() => {
@@ -157,37 +139,38 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  const handleQuantity = (type) => {
-    if (type === "dec")  // decrease 
-    {
-      quantity > 1 && setQuantity(quantity - 1);
-    } else  // increase 
-    {
-      setQuantity(quantity + 1);
+  useEffect(() => {
+    const getuser = async () => {
+      if(product){
+      try{
+        const res = await axios.get('http://localhost:3000/api/user/find/'+product.user_email)
+        setowner(res.data)
+        console.log(res.data)
+      }catch(error)
+      {
+        console.log(error)
+      }
     }
   };
+  getuser();
+  },[product.user_email]);
 
-  const handleClick = () =>     // Update Cart 
-  {
-    dispatch(
-      addProduct({ ...product, quantity, Price })
-    );
-  };
+  const handleexchange = (e)=>{
+      setisexchange(current => !current)
+  }
+  const handlerent = (e) => {
+    setisrent(current => !current)
+  }
 
-
-
-
+  
   return (
     <Container>
       <Announcement />
       <Navbar />
 
       <Wrapper>
-
         <ImgContainer>
-          
           <Image src={product.img} />
-          
         </ImgContainer>
 
         <InfoContainer>
@@ -196,6 +179,10 @@ const Product = () => {
             {product.desc}
           </Desc>
           <Price>{product.price}/=</Price>
+          <Title>{owner.username}</Title>
+          <li>
+            <Link to= {`/messege?data=${product.user_email}`}>Message</Link>
+          </li>
 
           <FilterContainer>
             <Filter>
@@ -215,19 +202,21 @@ const Product = () => {
               </FilterSize>
             </Filter> */}
           </FilterContainer>
-
+          {product.purpose==="Exchange"?<button onClick={handleexchange}>Exchange</button>:null}
+          {product.purpose==="Rent"?<button onClick={handlerent}>Rent</button>:null}
+          {product.purpose==="Sell"?
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
-              <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
+              <Remove />
+              <Amount>1</Amount>
+              <Add />
             </AmountContainer>
-            <Button onClick={handleClick} >ADD TO CART</Button>
-          </AddContainer>
-
+            <Button>ADD TO CART</Button>
+          </AddContainer>:null}
+        {isexchange&&<Exchangerequest Product={product} />}
         </InfoContainer>
 
-      </Wrapper> 
+      </Wrapper>
 
       <Newsletter />
       <Footer />

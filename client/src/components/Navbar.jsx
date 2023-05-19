@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
-import { useSelector } from "react-redux";
 
 
 const Container = styled.div`
@@ -78,8 +77,6 @@ const Navbar = () => {
     logout()
   }
 
-  const quantity = useSelector(state => state.cart.quantity)
-
     return (
         <Container>
             <Wrapper>
@@ -117,17 +114,15 @@ const Navbar = () => {
                     {/* <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem> */}
                     </MenuItem>
-
-                    
                     <MenuItem>
-                    <Link to="/Cart">
-                        <Badge badgeContent={quantity} color="primary">
-                        <ShoppingCartOutlined />
-                        </Badge>
-                      </Link>
-                    </MenuItem>
-                    
+                        <Badge badgeContent={0} color="primary">
 
+                        <Link to="/cart">
+                        <ShoppingCartOutlined />
+                        </Link>
+                        
+                        </Badge>
+                    </MenuItem>
                 </Right>
             </Wrapper>
         </Container>
