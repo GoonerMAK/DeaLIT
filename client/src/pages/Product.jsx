@@ -9,6 +9,10 @@ import Newsletter from "../components/Newsletter";
 import { publicRequest } from "../requestMethods";
 import Exchangerequest from "../components/Exchangerequest"
 import axios from "axios";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
+
+
 
 const Container = styled.div``;
 
@@ -126,7 +130,7 @@ const Product = () => {
   const [isexchange, setisexchange]= useState(false)
   const [isrent, setisrent]= useState(false)
   const [owner, setowner]=useState('')
-  // const dispatch = useDispatach();
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -138,6 +142,7 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
+
 
   useEffect(() => {
     const getuser = async () => {
@@ -155,6 +160,7 @@ const Product = () => {
   getuser();
   },[product.user_email]);
 
+
   const handleexchange = (e)=>{
       setisexchange(current => !current)
   }
@@ -162,7 +168,24 @@ const Product = () => {
     setisrent(current => !current)
   }
 
-  
+  const handleQuantity = (type) => {
+    if (type === "dec")  // decrease 
+    {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else  // increase 
+    {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const handleClick = () =>     // Update Cart 
+  {
+    dispatch(
+      addProduct({ ...product, quantity, Price })
+    );
+  };
+
+
   return (
     <Container>
       <Announcement />
@@ -202,18 +225,23 @@ const Product = () => {
               </FilterSize>
             </Filter> */}
           </FilterContainer>
+
           {product.purpose==="Exchange"?<button onClick={handleexchange}>Exchange</button>:null}
           {product.purpose==="Rent"?<button onClick={handlerent}>Rent</button>:null}
           {product.purpose==="Sell"?
+
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+
+            <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick} >ADD TO CART</Button>
+
           </AddContainer>:null}
         {isexchange&&<Exchangerequest Product={product} />}
+        
         </InfoContainer>
 
       </Wrapper>
