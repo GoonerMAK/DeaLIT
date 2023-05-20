@@ -206,7 +206,7 @@ router.post("/exchangereq/verifyowner/:id", async(req, res)=>{
 })
 
 //final sender accept for exchange
-router.post("exchangereq/sender/:id", async(req, res)=>{
+router.post("/exchangereq/sender/:id", async(req, res)=>{
   try{
     const id=req.params.id
     const contract=req.body.text
@@ -221,10 +221,28 @@ router.post("exchangereq/sender/:id", async(req, res)=>{
       const desc=Exchangerequests.desc
       const img=Exchangerequests.img
       const Exchanged= await exchanged.create({tittle,desc,img,owner_id, sender_id, objectid, return_date, contract})
-      console.log(Exchanged)
-      await Product.findByIdAndUpdate(objectid, {type:Exchanged})
-      await rentrequest.findByIdAndDelete(id)
-      res.status(200).json(Exchanged)
+      // console.log("for exchange",Exchanged)
+      await Product.findByIdAndUpdate(objectid, {type:"Exchanged"})
+      await exchangerequest.deleteMany({objectid:objectid})
+      res.status(200).json("OK")
+    }else{
+      throw Error('Owner has not varified yet')
+    }
+    
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+})
+//exchange request reject by customer
+router.post("exchangereq/sender/reject/:id", async(req, res)=>{
+  try{
+    const id=req.params.id
+    console.log(id)
+    const Exchangerequests= await exchangerequest.findById(id)
+    if(Exchangerequests.owner_verify){
+      await exchangerequest.findByIdAndDelete(id)
+      res.status(200).json("deleted")
     }else{
       throw Error('Owner has not varified yet')
     }

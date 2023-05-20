@@ -8,6 +8,7 @@ import Signup from './pages/Signup'
 import Addition from "./pages/Addition";
 import Messenger from "./pages/messenger/Messenger";
 import Requestsexchange from "./pages/RequestsExchange"
+import Pendingrequest from "./pages/Pendingrequest"
 
 
 
@@ -59,6 +60,8 @@ const App = () => {
         </Route>
         
         <Route path="/requestsExchange" element={ <Requestsexchange/> }></Route>
+
+        <Route path="/pendingrequest" element={ <Pendingrequest/> }></Route>
 
         {/* <Route path="/success">
           <Success />
