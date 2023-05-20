@@ -10,12 +10,24 @@ const Pendingrequest=()=>{
     const user=upperuser.user
 
     const [requests, setrequests]= useState([])
+    const [show, setshow] = useState(false)
     
 
     useEffect(() => {
         const getrequests = async () => {
           try {
             const res = await axios.get('http://localhost:3000/api/products/exchangereq/pending/' + user._id);
+            if (Array.isArray(res.data) && res.data.length === 0) {
+                console.log('Response is empty');
+                setshow(false)
+              } else if (typeof res.data === 'object' && Object.keys(res.data).length === 0) {
+                console.log('Response is empty');
+                setshow(false)
+                // Handle the case when the response is empty
+              } else {
+                setshow(true);
+                console.log('Check if any requests exist', res.data);
+              }
             // console.log("for message", res.data)
             setrequests(res.data);
             console.log(res.data)
@@ -28,10 +40,13 @@ const Pendingrequest=()=>{
 
       return (
         <>
-        {requests.map((request) => (
-        <Pendingexchange  key={request._id} request={request} />
-      ))}
+        {show?<>
+            {requests.map((request) => (
+            <Pendingexchange  key={request._id} request={request} />
+          ))}
+            </>:<label>no pending requests</label>}
         </>
+        
       )
     
     
