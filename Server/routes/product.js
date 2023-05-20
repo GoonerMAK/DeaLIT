@@ -2,7 +2,9 @@
 const Product = require("../models/Products");
 
 const rentrequest = require("../models/rentrequest");
+const exchangerequest= require("../models/exchange_request")
 const rented= require("../models/Rented");
+const exchanged = require("../models/Exchanged")
 const { findById } = require("../models/userModel");
 
 
@@ -132,6 +134,97 @@ router.post("/rentreq/verifysender/:id", async(req, res)=>{
       await Product.findByIdAndUpdate(objectid, {type:Rented})
       await rentrequest.findByIdAndDelete(id)
       res.status(200).json(Rented)
+    }else{
+      throw Error('Owner has not varified yet')
+    }
+    
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+})
+
+router.get("/exchangereq/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Exchangerequest = await exchangerequest.find({owner_id:req.params.id})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Exchangerequest)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+router.get("/exchangereq/pending/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Exchangerequest = await exchangerequest.find({sender_id:req.params.id})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Exchangerequest)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+
+//find if this user already updated any other request
+router.get("/exchangereq/find/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Exchangerequest = await exchangerequest.find({owner_id:req.params.id, owner_verify:true})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Exchangerequest)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+
+router.post("/exchangereq/verifyowner/:id", async(req, res)=>{
+  try{
+    const id=req.params.id
+    console.log(id)
+    var return_date=req.body.returndate
+    await exchangerequest.findByIdAndUpdate(id, {owner_verify:true, return_date:return_date})
+    res.status(200).json("upadated")
+    // await rentrequest.updateOne({_id:id}, {$set: {owner_verify:true, proposed_price:price}})
+    //Add nodemailer here
+
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+})
+
+//final sender accept for exchange
+router.post("exchangereq/sender/:id", async(req, res)=>{
+  try{
+    const id=req.params.id
+    const contract=req.body.text
+    console.log(id)
+    const Exchangerequests= await exchangerequest.findById(id)
+    if(Exchangerequests.owner_verify){
+      const owner_id=Exchangerequests.owner_email
+      const sender_id=Exchangerequests.sender_email
+      const objectid=Exchangerequests.objectid
+      const return_date=Exchangerequests.return_date
+      const tittle=Exchangerequests.title
+      const desc=Exchangerequests.desc
+      const img=Exchangerequests.img
+      const Exchanged= await exchanged.create({tittle,desc,img,owner_id, sender_id, objectid, return_date, contract})
+      console.log(Exchanged)
+      await Product.findByIdAndUpdate(objectid, {type:Exchanged})
+      await rentrequest.findByIdAndDelete(id)
+      res.status(200).json(Exchanged)
     }else{
       throw Error('Owner has not varified yet')
     }

@@ -97,19 +97,19 @@ const addrentProduct = async (req, res) => {
 
 //sent request for exchange
 const exchangerequest = async (req, res) => {
-  const {title, desc, img,owner_id, sender_id, object_id } = req.body
-  var return_date=req.body.return_date
+  const {title, desc, img,owner_id, sender_id, objectid } = req.body
+  var return_date=req.body.returndate
   // return_date= new Date(return_date)
   const owner_verify =false
   const sender_verify = false
   console.log(req.body)
-  if(!owner_id|| !sender_id|| !object_id|| !title || !desc){
+  if(!owner_id|| !sender_id|| !objectid|| !title || !desc){
     return res.status(400).json({ error: 'Please fill in all the fields' })
   }
   try {
     // const user_id = req.user._id
     
-    const exchangerequest = await Exchangerequest.create({title,desc,img,owner_id, sender_id, object_id, return_date, owner_verify, sender_verify})
+    const exchangerequest = await Exchangerequest.create({title,desc,img,owner_id, sender_id, objectid, return_date, owner_verify, sender_verify})
     console.log(exchangerequest) //, categories
     res.status(200).json(exchangerequest)
     console.log("Exchange kaj korse")

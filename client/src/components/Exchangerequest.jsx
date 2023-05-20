@@ -4,6 +4,56 @@ import styled from "styled-components";
 import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
 
+const Form = styled.form`
+  max-width: 400px;
+  margin-left: 70px;
+  margin-top: 10px;
+`;
+
+const Title = styled.h3`
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+`;
+
+const FileInput = styled.input`
+  display: block;
+  margin-bottom: 20px;
+`;
+
+const Button = styled.button`
+  background-color: teal;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 15px; 
+
+  &:hover {
+    background-color: rgb(10%, 60.2%, 70.2%);
+  }
+`;
+
+const Error = styled.div`
+  color: red;
+  margin-top: 10px;
+`;
+
+
 const Exchangerequest = (product) =>{
     const { user } = useAuthContext()
     const {Product} = product
@@ -22,6 +72,8 @@ const Exchangerequest = (product) =>{
         var fileObject = e.target.files[0];
         setimgfile(fileObject);
       }
+
+
       const handleimagesave=()=>{
         const formData = new FormData()
           formData.append("file", imgfile)
@@ -42,14 +94,14 @@ const Exchangerequest = (product) =>{
         const owner_id=Product.user_email
         const sender_id=user.user._id 
         console.log("sender",owner_id)
-        const object_id=Product._id
-        console.log("product",object_id)
+        const objectid=Product._id
+        console.log("product",objectid)
         e.preventDefault()
         //add to the backend part 
         
         console.log(img)
         await axios.post('http://localhost:3000/api/Addition/exchangerequest', 
-        {title, desc, img, sender_id, owner_id, object_id,returndate}
+        {title, desc, img, sender_id, owner_id, objectid,returndate}
         ).then((response)=>{
             console.log(response)
             setTitle('')
@@ -69,29 +121,31 @@ const Exchangerequest = (product) =>{
             }
           })
 
-
     }
+
+
     return (
-        <form className="exchange" onSubmit={handleSubmit} encType='multipart/form-data'> 
-            <h3>Place a request for exchange</h3>
+        <Form className="exchange" onSubmit={handleSubmit} encType='multipart/form-data'> 
+            <Title>Place a request for exchange</Title>
     
-            <label>Product Title:</label>
-            <input 
+            <Label>Product Title:</Label>
+            <Input 
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             // className={emptyFields.includes('title') ? 'error' : ''}
             />
-          <label>desc:</label>
+          <Label>Description: </Label>
         
-          <input 
+          <Input 
             type="text"
             onChange={(e) => setdesc(e.target.value)}
             value={desc}
             // className={emptyFields.includes('reps') ? 'error' : ''}
           />
-          <label>img:</label>
-          <input 
+
+          <Label>Image: </Label>
+          <FileInput 
             type="file"
             name="photos"
             onChange={handleimage}
@@ -99,12 +153,16 @@ const Exchangerequest = (product) =>{
             multiple
             // className={emptyFields.includes('reps') ? 'error' : ''}
           />
-          <label>return Date:</label>
-        <input type="date" onChange={(e) => setreturndate(e.target.value)} value={returndate}/>
-          <button>place a request</button>
-          {error && <div className="error">{error}</div>}
-        </form>
+
+          <Label>Return Date:</Label>
+
+        <Input type="date" onChange={(e) => setreturndate(e.target.value)} value={returndate}/>
+          <Button>Place a Request</Button>
+
+          {error && <Error className="error">{error}</Error>}
+        </Form>
+
         )
 
 }
-export default Exchangerequest
+export default Exchangerequest;

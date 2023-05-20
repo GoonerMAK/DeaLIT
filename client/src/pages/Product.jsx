@@ -107,11 +107,12 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 15px;
+  padding: 10px;
   border: 3px solid teal;
   background-color: white;
   cursor: pointer;
   font-weight: 500;
+  font-size: 17px;
 
   &:hover{
       background-color: #f8f4f4;
@@ -203,9 +204,10 @@ const Product = () => {
           </Desc>
           <Price>{product.price}/=</Price>
           <Title>{owner.username}</Title>
-          <li>
+          
+          <Button>
             <Link to= {`/messege?data=${product.user_email}`}>Message</Link>
-          </li>
+          </Button>
 
           <FilterContainer>
             <Filter>
@@ -226,8 +228,8 @@ const Product = () => {
             </Filter> */}
           </FilterContainer>
 
-          {product.purpose==="Exchange"?<button onClick={handleexchange}>Exchange</button>:null}
-          {product.purpose==="Rent"?<button onClick={handlerent}>Rent</button>:null}
+          {product.purpose==="Exchange"?<Button onClick={handleexchange}>Exchange</Button>:null}
+          {product.purpose==="Rent"?<Button onClick={handlerent}>Rent</Button>:null}
           {product.purpose==="Sell"?
 
           <AddContainer>
@@ -241,7 +243,7 @@ const Product = () => {
 
           </AddContainer>:null}
         {isexchange&&<Exchangerequest Product={product} />}
-        
+
         </InfoContainer>
 
       </Wrapper>

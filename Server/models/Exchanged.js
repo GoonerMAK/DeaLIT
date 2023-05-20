@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const exchangerequest = new mongoose.Schema(
+const exchanged = new mongoose.Schema(
   {
-    title: { type: String, required: true },
+    tittle: { type: String, required: true },
     desc: { type: String, required: true },
     img: { type: String, required: true },
     owner_id: {
@@ -13,13 +13,13 @@ const exchangerequest = new mongoose.Schema(
         type: String,
         //required: true
       },
-    owner_verify:{type: Boolean},
-    sender_verify:{type:Boolean},
+
     objectid:{type: String},
-    return_date:{type: Date}
+    return_date:{type: Date},
+    contract:{type:String}
     
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("exchangerequest", exchangerequest);
+module.exports = mongoose.model("exchanged", exchanged);

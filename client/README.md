@@ -15,3 +15,5 @@
 7. npm install styled componenets
 
 8. npm install @material-ui/core @material-ui/icons
+
+9.npm install '@react-pdf/renderer'

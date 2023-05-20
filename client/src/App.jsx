@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Addition from "./pages/Addition";
 import Messenger from "./pages/messenger/Messenger";
+import Requestsexchange from "./pages/RequestsExchange"
 
 
 
@@ -57,6 +58,7 @@ const App = () => {
           element={  <Messenger />}>
         </Route>
         
+        <Route path="/requestsExchange" element={ <Requestsexchange/> }></Route>
 
         {/* <Route path="/success">
           <Success />
