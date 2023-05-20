@@ -2,12 +2,20 @@ import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
+import { useAuthContext } from './hooks/useAuthContext'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
-import { BrowserRouter as Router, Routes, Route, Redirect, } from "react-router-dom";
+
+import { BrowserRouter as Router, Routes, Route, Redirect, Navigate } from "react-router-dom";
+
+
 
 const App = () => {
 
-  const user = true;
+
+   const { user } = useAuthContext()
+
   
   return (
     <Router>
@@ -25,6 +33,19 @@ const App = () => {
         <Route path="/cart" element={<Cart/>}>
 
         </Route>
+
+
+        <Route 
+              path="/login" 
+              // element={<Login /> } 
+              element={!user ? <Login /> : <Navigate to="/" />} 
+            > </Route>
+        <Route 
+              path="/signup"
+              // element={<Signup /> } 
+              element={!user ? <Signup /> : <Navigate to="/" />} 
+         > </Route>  
+
 
         {/* <Route path="/success">
           <Success />
