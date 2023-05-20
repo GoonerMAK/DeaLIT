@@ -15,3 +15,7 @@
 7. npm install styled componenets
 
 8. npm install @material-ui/core @material-ui/icons
+
+9. npm install @reduxjs/toolkit --force (to use REDUX)
+
+10. npm install react-redux --force

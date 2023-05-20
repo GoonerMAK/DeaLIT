@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
+const mailsender= require('../controllers/mailsender')
 
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-  unername:{
+  username:{
     type: String,
     require: true,
   },
@@ -25,6 +26,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  verfied:{
+    type: Boolean,
+    default: false
   }
 })
 
@@ -55,6 +60,7 @@ userSchema.statics.signup = async function(username, Phone, NID, email, password
   const hash = await bcrypt.hash(password, salt)
 
   const user = await this.create({ username, Phone, NID, email, password: hash })
+  console.log(username)
 
   return user
 }
@@ -74,6 +80,10 @@ userSchema.statics.login = async function(email, password) {
   const match = await bcrypt.compare(password, user.password)
   if (!match) {
     throw Error('Incorrect password')
+  }
+  if(!user.verfied){
+    await mailsender(email)
+    throw Error('Your Email ID is not verified. An verfication mail has sent to your email')
   }
 
   return user

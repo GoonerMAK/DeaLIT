@@ -1,112 +1,133 @@
-const Product = require('../models/productModel')
+const Product = require('../models/Products')
 const mongoose = require('mongoose')
-
-// get all Products
-const getProducts = async (req, res) => {
-  const user_id = req.user._id
-
-  const Products = await Product.find({user_id}).sort({createdAt: -1})
-
-  res.status(200).json(Products)
-}
-
-// get a single Product
-const getProduct = async (req, res) => {
-  const { id } = req.params
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such Product'})
-  }
-
-  const product = await Product.findById(id)
-
-  if (!product) {
-    return res.status(404).json({error: 'No such Product'})
-  }
-  
-  res.status(200).json(product)
-}
+const Rentrequest= require('../models/rentrequest')
 
 
-// create new Product
-const createProduct = async (req, res) => {
-  const {title,desc ,img, price, categories} = req.body //, categories
+
+// Add new Product for sell
+const addsellProduct = async (req, res) => {
+  const {user_email,title,desc ,img, price, categories} = req.body //, categories
   console.log(categories)
   //let emptyFields = []
 
   if(!title || !desc ||!img || !price ||!categories ) {  //||!categories
     return res.status(400).json({ error: 'Please fill in all the fields' })
   }
-  //using emptyfiels
-  // let emptyFields = []
-
-  // if(!title) {
-  //   emptyFields.push('title')
-  // }
-  // if(!load) {
-  //   emptyFields.push('load')
-  // }
-  // if(!reps) {
-  //   emptyFields.push('reps')
-  // }
-  // if(emptyFields.length > 0) {
-  //   return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
-  // }
+ 
 
   
 
   // add doc to db
   try {
-    const user_id = req.user._id
+    // const user_id = req.user._id
     const type= "pending"
-    const product = await Product.create({title ,desc ,img ,price, user_id, type, categories}) //, categories
+    const purpose="Sell"
+    const product = await Product.create({user_email, title ,desc ,img ,price, type, purpose, categories}) //, categories
     res.status(200).json(product)
   } catch (error) {
     res.status(400).json({error: error.message})
   }
 }
 
-// delete a Product
-const deleteProduct = async (req, res) => {
-  const { id } = req.params
+//add product for exchange
+const addexchangeProduct = async (req, res) => {
+  // const title= req.body.title
+  // const user_email= req.body.user_email
+  // const desc= req.body.desc
+  // const preference= req.body.preference
+  // const categories = req.body.categories
+  // const exchangetype = req.body.exchangetype
+  // const img = req.files.originalname
+  const {user_email, title,desc ,img, preference, categories, exchangetype} = req.body //, categories
+  console.log(req.body)
+  // console.log(req)
+ 
+ 
+   console.log(user_email, title,desc,img, preference, categories, exchangetype)
+  //let emptyFields = []
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such Product'})
+  if(!title || !desc  || !preference ||!exchangetype ||!categories ) {  //||!categories ||!img
+    return res.status(400).json({ error: 'Please fill in all the fields' })
   }
+ 
 
-  const Product = await Product.findOneAndDelete({_id: id})
+  
 
-  if (!Product) {
-    return res.status(400).json({error: 'No such Product'})
+  // add doc to db
+  try {
+    //const user_id = req.user._id
+    const type= "pending"
+    const purpose="Exchange"
+    //const img="fhgfhgf"
+    // console.log({user_email, title ,desc ,img ,preference,  exchangetype, type, purpose, categories})
+    const product = await Product.create({user_email, title ,desc ,img ,preference, exchangetype, type, purpose, categories}) //, categories
+    console.log(product)
+    console.log("addition worked")
+    res.status(200).json(product)
+  } catch (error) {
+    res.status(400).json({error: error.message})
   }
-
-  res.status(200).json(Product)
 }
 
-// update a Product
-const updateProduct = async (req, res) => {
-  const { id } = req.params
+//add product for rent
+const addrentProduct = async (req, res) => {
+  const {user_email,title,desc ,img, price,  prefer, categories} = req.body //, categories
+  console.log(categories)
+  //let emptyFields = []
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such Product'})
+  if(!title || !desc ||!img ||! price  ||!prefer ||!categories ) {  //||!categories
+    return res.status(400).json({ error: 'Please fill in all the fields' })
   }
+ 
 
-  const Product = await Product.findOneAndUpdate({_id: id}, {
-    ...req.body
-  })
+  
 
-  if (!Product) {
-    return res.status(400).json({error: 'No such Product'})
+  // add doc to db
+  try {
+    // const user_id = req.user._id
+    const type= "pending"
+    const purpose="Rent"
+    const product = await Product.create({user_email, title ,desc ,img ,prefer, price,  type, purpose, categories}) //, categories
+    res.status(200).json(product)
+  } catch (error) {
+    res.status(400).json({error: error.message})
   }
-
-  res.status(200).json(Product)
 }
+
+//sent request for exchange
+const exchangerequest = async (req, res) => {
+  const {} = req.body
+}
+
+const rentngerequest = async (req, res) => {
+  const {owner_email, sender_email, objectid, proposed_price} = req.body 
+  var return_date=req.body.return_date
+  console.log(req.body)
+  return_date= new Date(return_date)
+  console.log(return_date)
+  const owner_verify =false
+  const sender_verify = false
+  console.log(owner_email, sender_email, objectid, return_date)
+  if(!owner_email|| !sender_email|| !objectid|| !return_date){
+    return res.status(400).json({ error: 'Please fill in all the fields' })
+  }
+  try {
+    // const user_id = req.user._id
+    
+    const rentrequest = await Rentrequest.create({owner_email, sender_email, objectid, return_date, proposed_price, owner_verify, sender_verify})
+    console.log(rentrequest) //, categories
+    res.status(200).json(rentrequest)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+
 
 
 module.exports = {
-  getProducts,
-  getProduct,
-  createProduct,
-  deleteProduct,
-  updateProduct
+  addsellProduct,
+  addexchangeProduct,
+  addrentProduct,
+  rentngerequest
 }

@@ -9,6 +9,9 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const cors = require("cors");
 const userRoutes = require('./routes/user');
+const addproductroute = require('./routes/addproduct');
+const conversationRoute = require("./routes/conversations");
+const messageRoute = require("./routes/messages");
 
 dotenv.config();
 
@@ -32,6 +35,9 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/user", userRoutes)
+app.use("/api/Addition", addproductroute)
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 
 
