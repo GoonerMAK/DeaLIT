@@ -1,5 +1,6 @@
 import "./messenger.css";
 // import Topbar from "../../components/topbar/Topbar";
+import Announcement from "../../components/Announcement";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
@@ -8,7 +9,6 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import axios from "axios";
 import { io } from "socket.io-client";
 import Navbar from "../../components/Navbar";
-import { useLocation , Link} from "react-router-dom";
 
 const Messenger =()=> {
   const [conversations, setConversations] = useState([]);
@@ -16,21 +16,13 @@ const Messenger =()=> {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]); //remove later
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
   // const { user } = useAuthContext()
   const scrollRef = useRef();
 
-  //get params
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const data = params.get('data');
-
-
   const upperuser = JSON.parse(localStorage.getItem('user'))
   const user=upperuser.user
-
-
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -58,77 +50,12 @@ const Messenger =()=> {
     });
   }, [user]);
 
-  
-  // useEffect(() => {
-  //   const getnewConversations = async () => {
-  //     if(data){
-  //       var newchat=false;
-  //       try {
-  //         const res = await axios.get(`http://localhost:3000/api/conversations/find/${data}/${user._id}`);
-  //         setCurrentChat(res.data);
-  //         if(res.data!=null){
-  //           newchat=false
-  //         }else{
-  //           newchat=true
-  //         }
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //       //if no previous convo, post convo
-  //       if(newchat){
-  //         const receiverId=data
-  //         const senderId=user._id
-  //         if(receiverId!=senderId){
-  //           try {
-  //             console.log("posting new chat")
-  //             const res = await axios.post('http://localhost:3000/api/conversations/', {senderId, receiverId});
-  //             console.log("for new chat", res.data)
-  //             setCurrentChat(res.data);
-  //           } catch (err) {
-  //             console.log(err);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   };
-  //   getnewConversations();
-  // }, [data, user._id]);
-
   useEffect(() => {
     const getConversations = async () => {
-      if(data){
-        var newchat=false;
-        try {
-          const res = await axios.get(`http://localhost:3000/api/conversations/find/${data}/${user._id}`);
-          setCurrentChat(res.data);
-          if(res.data!=null){
-            newchat=false
-          }else{
-            newchat=true
-          }
-        } catch (err) {
-          console.log(err);
-        }
-        //if no previous convo, post convo
-        if(newchat){
-          const receiverId=data
-          const senderId=user._id
-          if(receiverId!=senderId){
-            try {
-              console.log("posting new chat")
-              const res = await axios.post('http://localhost:3000/api/conversations/', {senderId, receiverId});
-              console.log("for new chat", res.data)
-              setCurrentChat(res.data);
-            } catch (err) {
-              console.log(err);
-            }
-          }
-        }
-      }
       try {
         const res = await axios.get('http://localhost:3000/api/conversations/' + user._id);
         setConversations(res.data);
-        // console.log("for conversation",res.data)
+        console.log("for conversation",res.data)
       } catch (err) {
         console.log(err);
       }
@@ -140,7 +67,7 @@ const Messenger =()=> {
     const getMessages = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/messages/' + currentChat?._id);
-        // console.log("for message", res.data)
+        console.log("for message", res.data)
         setMessages(res.data);
       } catch (err) {
         console.log(err);
@@ -169,7 +96,7 @@ const Messenger =()=> {
 
     try {
       const res = await axios.post('http://localhost:3000/api/messages', message);
-      // console.log("another messege", res.data)
+      console.log("another messege", res.data)
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
@@ -183,12 +110,14 @@ const Messenger =()=> {
 
   return (
     <>
-      {/* <Topbar /> */}
+      <Announcement />
+      <Navbar/>
       <div className="messenger">
-        <Navbar/>
+        
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
+            {/* <input placeholder="Search for friends" className="chatMenuInput" /> */}
+            <h3 className="chatMenuInput">Available Conversations</h3>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />
