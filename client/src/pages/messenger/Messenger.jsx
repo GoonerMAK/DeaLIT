@@ -1,5 +1,6 @@
 import "./messenger.css";
 // import Topbar from "../../components/topbar/Topbar";
+import Announcement from "../../components/Announcement";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
@@ -109,12 +110,14 @@ const Messenger =()=> {
 
   return (
     <>
-      {/* <Topbar /> */}
+      <Announcement />
+      <Navbar/>
       <div className="messenger">
-        <Navbar/>
+        
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
+            {/* <input placeholder="Search for friends" className="chatMenuInput" /> */}
+            <h3 className="chatMenuInput">Available Conversations</h3>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />

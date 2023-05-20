@@ -6,6 +6,11 @@ import { useAuthContext } from './hooks/useAuthContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Addition from "./pages/Addition";
+import AddSellItem from "./pages/AddSellItem";
+import AddRentItem from "./pages/AddRentItem";
+import AddExchangeItem from "./pages/AddExchangeItem";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Messenger from "./pages/messenger/Messenger";
 
 
@@ -23,35 +28,41 @@ const App = () => {
     <Router>
       <Routes>
         <Route exact path="/" element={<Home/>}>
+          
         </Route>
-
         <Route path="/products/:category" element={<ProductList/>}>
-        </Route>
-
-        <Route path="/ProductList" element={<Home/>}>
+          
         </Route>
 
         <Route path="/product/:id" element={<Product/>}>          
           
         </Route>
         <Route path="/cart" element={<Cart/>}>
+
         </Route>
 
         <Route 
               path="/login" 
               // element={<Login /> } 
               element={!user ? <Login /> : <Navigate to="/" />} 
-            > 
-        </Route>
-
+            > </Route>
         <Route 
               path="/signup"
               // element={<Signup /> } 
               element={!user ? <Signup /> : <Navigate to="/" />} 
-         > 
-         </Route>
+         > </Route>
         
         <Route path="/addition" element={ <Addition/> }></Route>
+
+        <Route path="/addsell" element={<AddSellItem/>}></Route>
+
+        <Route path="/addrent" element={<AddRentItem/>}></Route>
+
+        <Route path="/addexchange" element={<AddExchangeItem/>}></Route>
+
+        <Route path="/profile" element={<Profile/>}></Route>
+
+        <Route path="/editprofile" element={<EditProfile/>}></Route>
 
         <Route path="/messege"
           element={  <Messenger />}>

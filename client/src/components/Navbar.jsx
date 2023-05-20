@@ -1,11 +1,10 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined, Chat, Add } from "@material-ui/icons";
+import { Search, ShoppingCartOutlined  } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
-import { useSelector } from "react-redux";
 
 
 const Container = styled.div`
@@ -55,9 +54,9 @@ const Center = styled.div`
     text-align: center;
 `
 const MenuItem = styled.div`
-  display: flex;
   font-size: 14px;
   cursor: pointer;
+  margin-left: 25px;
 `;
 
 const Right = styled.div`
@@ -66,99 +65,6 @@ const Right = styled.div`
     align-items: center;
     justify-content: flex-end;
     padding-right: 50px;
-`
-const LeftPadding = styled.div`
-    padding-left: 20px;
-`
-
-const IconContainer = styled.div`
-  margin: 5px;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-  z-index: 2;
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  &:hover span,
-  &:hover .tooltip {
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
-  }
-`
-
-const IconSpan = styled.span`
-  display: block;
-  height: 30px;
-  width: 30px;
-  background: white;
-  border-radius: 50%;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  &:hover {
-    color: white;
-  }
-`
-
-const Tooltip = styled.div`
-position: absolute;
-top: 0;
-z-index: 1;
-background: teal;
-color: #fff;
-padding: 10px 18px;
-font-size: 15px;
-font-weight: 500;
-border-radius: 25px;
-opacity: 0;
-pointer-events: none;
-box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
-transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  ${IconContainer}:hover & {
-  top: +40px;
-  opacity: 1;
-  pointer-events: auto;
-  }
-
-&:before {
-  position: absolute;
-  content: '';
-  height: 0px;
-  width: 0px;
-  background: #fff;
-  left: 50%;
-  bottom: -6px;
-  transform: translateX(-50%) rotate(45deg);
-  transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-`
-const ChatContainer = styled(IconContainer)`
-  &:hover ${IconSpan},
-  &:hover ${Tooltip},
-  &:hover ${Tooltip}:before {
-    background: teal;
-  }
-`
-
-const CartContainer = styled(IconContainer)`
-  &:hover ${IconSpan},
-  &:hover ${Tooltip},
-  &:hover ${Tooltip}:before {
-    background: teal;
-  }
-`
-const AddIconContainer = styled(IconContainer)`
-  &:hover ${IconSpan},
-  &:hover ${Tooltip},
-  &:hover ${Tooltip}:before {
-    background: teal;
-  }
 `
 
 
@@ -170,8 +76,6 @@ const Navbar = () => {
   const handleClick = () => {
     logout()
   }
-
-  const quantity = useSelector(state => state.cart.quantity)
 
     return (
         <Container>
@@ -185,38 +89,12 @@ const Navbar = () => {
                 </Left>
 
                 <Center>
-                  <Link to= "/">
                     <Logo>
-                         <img src="https://i.ibb.co/wsWfKKn/logo-spl.png" alt="logo-spl" /> 
+                        {/* <img src="https://i.ibb.co/7XVRBS4/logo-spl.png" alt="logo" /> */}
                     </Logo>
-                  </Link>
-                    
                 </Center>
 
                 <Right>
-
-                <MenuItem>
-                  <AddIconContainer>
-                    <Tooltip>Add Product</Tooltip>
-                     <IconSpan>
-                      <Add/>
-                     </IconSpan>
-                  </AddIconContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>  
-
-                <MenuItem>
-                  <ChatContainer>
-                    <Tooltip>Chats</Tooltip>
-                     <IconSpan>
-                      <Chat/>
-                     </IconSpan>
-                  </ChatContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>
-
                 <MenuItem>
 
                 {user && (
@@ -228,7 +106,6 @@ const Navbar = () => {
                 {!user && (
                 <MenuItem>
                 <Link to="/login">Login</Link>
-                <LeftPadding> </LeftPadding>
                 <Link to="/signup">Signup</Link>
                 </MenuItem>
                 )}
@@ -237,26 +114,15 @@ const Navbar = () => {
                     {/* <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem> */}
                     </MenuItem>
-
-                    
                     <MenuItem>
-                    <LeftPadding> </LeftPadding>
-                    <CartContainer>
-                      <Tooltip> Cart </Tooltip>
-                      <IconSpan>
-                        <Link to="/Cart">
-                        <Badge badgeContent={quantity} color="primary">
-                        
+                        <Badge badgeContent={0} color="primary">
+
+                        <Link to="./Cart">
                         <ShoppingCartOutlined />
-                        </Badge>
                         </Link>
-                      </IconSpan>
-
-                      </CartContainer>
-                      
+                        
+                        </Badge>
                     </MenuItem>
-                    
-
                 </Right>
             </Wrapper>
         </Container>
