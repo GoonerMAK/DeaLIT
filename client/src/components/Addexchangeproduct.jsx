@@ -51,7 +51,7 @@ const Addexchangeproduct = ()=>{
         axios.post(
           "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
           .then((response) => {
-            console.log(response);
+            console.log("for image URL", response);
             setimg(response.data.secure_url);
             }).catch((error) => {
               console.log(error);
@@ -61,10 +61,9 @@ const Addexchangeproduct = ()=>{
     const handleSubmit=  (e)=>{
         e.preventDefault()
         //add to the backend part 
-        console.log(img)
-        
         handleimagesave()
-         const user_email= user.email
+        console.log(img)
+         const user_email= user.user._id
         // formData.append("user_email",user_email)
         // formData.append("title",title)
         // formData.append("desc",desc)

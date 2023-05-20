@@ -25,15 +25,15 @@ const App = () => {
         <Route exact path="/" element={<Home/>}>
         </Route>
 
-        <Route path="/products/:category" element={<ProductList/>}>
+        <Route path="/products/:category" element={<ProductList/>}>          
         </Route>
-
+        
         <Route path="/ProductList" element={<Home/>}>
         </Route>
 
         <Route path="/product/:id" element={<Product/>}>          
-          
         </Route>
+
         <Route path="/cart" element={<Cart/>}>
         </Route>
 
@@ -41,15 +41,15 @@ const App = () => {
               path="/login" 
               // element={<Login /> } 
               element={!user ? <Login /> : <Navigate to="/" />} 
-            > 
+        > 
         </Route>
-
+        
         <Route 
               path="/signup"
               // element={<Signup /> } 
               element={!user ? <Signup /> : <Navigate to="/" />} 
-         > 
-         </Route>
+        > 
+        </Route>
         
         <Route path="/addition" element={ <Addition/> }></Route>
 

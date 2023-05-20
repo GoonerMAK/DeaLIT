@@ -1,14 +1,18 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation , Link} from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { publicRequest } from "../requestMethods";
+import Exchangerequest from "../components/Exchangerequest"
+import axios from "axios";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+
+
 
 const Container = styled.div``;
 
@@ -89,7 +93,6 @@ const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
-  cursor : pointer;
 `;
 
 const Amount = styled.span`
@@ -101,38 +104,19 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
-  cursor : text;
 `;
 
 const Button = styled.button`
-  padding: 15px;
+  padding: 10px;
   border: 3px solid teal;
   background-color: white;
   cursor: pointer;
   font-weight: 500;
+  font-size: 17px;
 
   &:hover{
       background-color: #f8f4f4;
   }
-`;
-
-const Arrow = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: #fff7f7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: ${(props) => props.direction === "left" && "10px"};
-  right: ${(props) => props.direction === "right" && "10px"};
-  margin: auto;
-  cursor: pointer;
-  opacity: 0.5;
-  z-index: 2;
 `;
 
 
@@ -144,6 +128,9 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [isexchange, setisexchange]= useState(false)
+  const [isrent, setisrent]= useState(false)
+  const [owner, setowner]=useState('')
   const dispatch = useDispatch();
 
 
@@ -156,6 +143,31 @@ const Product = () => {
     };
     getProduct();
   }, [id]);
+
+
+  useEffect(() => {
+    const getuser = async () => {
+      if(product){
+      try{
+        const res = await axios.get('http://localhost:3000/api/user/find/'+product.user_email)
+        setowner(res.data)
+        console.log(res.data)
+      }catch(error)
+      {
+        console.log(error)
+      }
+    }
+  };
+  getuser();
+  },[product.user_email]);
+
+
+  const handleexchange = (e)=>{
+      setisexchange(current => !current)
+  }
+  const handlerent = (e) => {
+    setisrent(current => !current)
+  }
 
   const handleQuantity = (type) => {
     if (type === "dec")  // decrease 
@@ -175,19 +187,14 @@ const Product = () => {
   };
 
 
-
-
   return (
     <Container>
       <Announcement />
       <Navbar />
 
       <Wrapper>
-
         <ImgContainer>
-          
           <Image src={product.img} />
-          
         </ImgContainer>
 
         <InfoContainer>
@@ -196,6 +203,11 @@ const Product = () => {
             {product.desc}
           </Desc>
           <Price>{product.price}/=</Price>
+          <Title>{owner.username}</Title>
+          
+          <Button>
+            <Link to= {`/messege?data=${product.user_email}`}>Message</Link>
+          </Button>
 
           <FilterContainer>
             <Filter>
@@ -216,18 +228,25 @@ const Product = () => {
             </Filter> */}
           </FilterContainer>
 
+          {product.purpose==="Exchange"?<Button onClick={handleexchange}>Exchange</Button>:null}
+          {product.purpose==="Rent"?<Button onClick={handlerent}>Rent</Button>:null}
+          {product.purpose==="Sell"?
+
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
+
+            <Remove onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
             <Button onClick={handleClick} >ADD TO CART</Button>
-          </AddContainer>
+
+          </AddContainer>:null}
+        {isexchange&&<Exchangerequest Product={product} />}
 
         </InfoContainer>
 
-      </Wrapper> 
+      </Wrapper>
 
       <Newsletter />
       <Footer />

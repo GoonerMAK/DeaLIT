@@ -12,7 +12,7 @@ export default function Conversation({ conversation, currentUser }) {
     const getUser = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/user/find/'+ friendId);
-        console.log("find conversation", res.data)
+        // console.log("find conversation", res.data)
         setUser(res.data);
       } catch (err) {
         console.log(err);
