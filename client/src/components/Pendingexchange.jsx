@@ -8,6 +8,61 @@ import Contractforexc from "./Contractforexc";
 import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
 
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
+const Description = styled.label`
+  font-size: 16px;
+  color: black;
+`;
+
+const ReturnDate = styled.label`
+  font-size: 16px;
+  color: black;
+`;
+
+const Image = styled.img`
+  width: 200px;
+`;
+
+const MessageLink = styled(Link)`
+  text-decoration: none;
+  color: blue;
+`;
+
+const VerifyButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
+const RejectButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
+
 const Pendingexchange = ({request}) => {
     const [product, setProduct] = useState('')
     const [returndate, setreturndate] = useState(request.return_date)
@@ -92,43 +147,56 @@ const Pendingexchange = ({request}) => {
       setShowConfirmation(false);
     };
 
-  
-
-      
-
-      
     
     return (
         <>
-            <h1>{product.title}</h1>
-            <h1>{request.title}</h1>
-            <label>{request.desc}</label>
-            <label>return Date:{returndate}</label>
-            <img src={request.img} />
-            <li>
-            <Link to= {`/messege?data=${request.owner_id}`}>Message</Link>
-            </li>
-            
-            {request.owner_verify?<button onClick={handleaccept}>varify</button>:<label>Owner havent varified this product yet.</label>}
-            {request.owner_verify?<button onClick={handlereject}>Reject</button>:<label>Owner havent varified this product yet.</label>}
-            {showConfirmation && (
-                <ConfirmationDialog
-                message="Are you sure you want to verify? Once you varify contract will be generated and you cant undo"
-                onConfirm={handleConfirm}
-                onCancel={handleCancel}
-              />
-            )}
-            {ShowConfirmationRe && (
-                <ConfirmationDialog
-                message="Are you sure you want to reject? Once you reject, you cant undo"
-                onConfirm={handleConfirmRe}
-                onCancel={handleCancel}
-              />
-            )}
-            {(request.sender_verify||updated)&&<button onClick={handleclick}>show contract</button>}
-            {selected&& <Contractforexc text={text}/>}
 
-        </>
+      <Wrapper>
+      <Title> <strong>Product: </strong> {product.title}</Title>
+      <Title> <strong>Request: </strong>  {request.title}</Title>
+      <Description> <strong>Description: </strong> {request.desc}</Description>
+      <ReturnDate> <strong>Return Date:</strong> {returndate}</ReturnDate>
+      <Image src={request.img} />
+      <li>
+        <MessageLink to={`/messege?data=${request.owner_id}`}>Message</MessageLink>
+      </li>
+
+      {request.owner_verify ? (
+        <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+      ) : (
+        <label>Owner hasn't verified this product yet.</label>
+      )}
+
+      {request.owner_verify ? (
+        <RejectButton onClick={handlereject}>Reject</RejectButton>
+      ) : (
+        <label>Owner hasn't verified this product yet.</label>
+      )}
+
+      {showConfirmation && (
+        <ConfirmationDialog
+          message="Are you sure you want to verify? Once you verify, the contract will be generated and you can't undo."
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
+
+      {ShowConfirmationRe && (
+        <ConfirmationDialog
+          message="Are you sure you want to reject? Once you reject, you can't undo."
+          onConfirm={handleConfirmRe}
+          onCancel={handleCancel}
+        />
+      )}
+
+      {(request.sender_verify || updated) && (
+        <button onClick={handleclick}>Show Contract</button>
+      )}
+
+      {selected && <Contractforexc text={text} />}
+      </Wrapper>
+
+      </>
     )
 }
 

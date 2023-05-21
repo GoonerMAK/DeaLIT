@@ -8,7 +8,73 @@ import Contractforexc from "./Contractforexc";
 import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-const RequestsRents = ({request}) => {
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
+const Label = styled.label`
+  font-size: 16px;
+  color: black;
+  margin-bottom: 3px;
+`;
+
+const SelectInput = styled.select`
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const PriceInput = styled.input`
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const MessageLink = styled(Link)`
+  text-decoration: none;
+  color: blue;
+`;
+
+const VerifiedLabel = styled.label`
+  font-size: 16px;
+  color: black;
+`;
+
+const VerifyButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
+const ShowContractButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
+const RequestsRents = ({request}) => 
+{
     const [product, setProduct] = useState('')
     const [renttype, setrenttype] = useState(request.renttype)
     const [price, setprice] = useState(request.proposed_price)
@@ -16,8 +82,8 @@ const RequestsRents = ({request}) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [updated, setupdated] = useState(false)
     const [show, setshow] = useState(false)
-    
-    
+
+
     const handleclick = (e)=>{
       setselected(current => !current)
     }
@@ -46,7 +112,7 @@ const RequestsRents = ({request}) => {
       })
       setShowConfirmation(false);
     };
-  
+
     const handleCancel = () => {
       // Cancel the action
       console.log('Action canceled');
@@ -61,7 +127,7 @@ const RequestsRents = ({request}) => {
             );
             // console.log(res);
             setProduct(res.data);
-            
+
           } catch (err) {}
         };
         getProducts();
@@ -86,49 +152,61 @@ const RequestsRents = ({request}) => {
             console.log(err);
           }
         };
-      
+
         getRequests();
       }, [request.owner_id, request.owner_verify]);
 
       const text= `this is a contract for ${product.title} `
-    
+
     return (
         <>
-            <h1>{product.title}</h1>
-            <label>prefered rent type:{renttype}</label>
-            <label>change Rent Type?</label>
-            {!updated&&<select value={renttype} onChange={e => setrenttype(e.target.value)}>
-                <option value="choose">weekly</option>
-                <option value="Weekly">weekly</option>
-                <option value="Monthly">Monthly</option>
-                <option value="Yearly">Yearly</option>
-            </select>}
-            <label>prefered price:{price}</label>
-            <label>change price?</label>
-            <input 
-            type="number"
-            onChange={(e) => setprice(e.target.value)}
-            value={price}
-            // className={emptyFields.includes('load') ? 'error' : ''}
-          />
-            <li>
-            <Link to= {`/messege?data=${request.sender_id}`}>Message</Link>
-            </li>
-            
-            {show||request.owner_verify||updated?<label>this product is already verified</label>:<button onClick={handleaccept}>varify</button>}
-            {showConfirmation && (
-                <ConfirmationDialog
-                message="Are you sure you want to verify? Once you varify contract will be generated and you cant undo"
-                onConfirm={handleConfirm}
-                onCancel={handleCancel}
-              />
-            )}
-            {(request.owner_verify||updated)&&<button onClick={handleclick}>show contract</button>}
-            {selected&& <Contractforexc text={text}/>}
+            <Wrapper>
+      <Title>{product.title}</Title>
+      <Label>Preferred rent type: {renttype}</Label>
+      <Label>Change rent type?</Label>
+      {!updated && (
+        <SelectInput value={renttype} onChange={(e) => setrenttype(e.target.value)}>
+          <option value="choose">Choose</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </SelectInput>
+      )}
+      <Label>Preferred price: {price}</Label>
+      <Label>Change price?</Label>
+      <PriceInput
+        type="number"
+        onChange={(e) => setprice(e.target.value)}
+        value={price}
+      />
 
+      <li>
+        <MessageLink to={`/messege?data=${request.sender_id}`}>Message</MessageLink>
+      </li>
+
+      {show || request.owner_verify || updated ? (
+        <VerifiedLabel>This product is already verified</VerifiedLabel>
+      ) : (
+        <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+      )}
+
+      {showConfirmation && (
+        <ConfirmationDialog
+          message="Are you sure you want to verify? Once you verify, the contract will be generated and you can't undo."
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
+
+      {(request.owner_verify || updated) && (
+        <ShowContractButton onClick={handleclick}>Show Contract</ShowContractButton>
+      )}
+
+      {selected && <Contractforexc text={text} />}
+    </Wrapper>
         </>
     )
 }
 
 
-export default RequestsRents
+export default RequestsRents;

@@ -9,6 +9,57 @@ import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
 
 
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 34px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+const ProductTitle = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
+const Label = styled.label`
+  font-size: 19px;
+  color: black;
+  margin-bottom: 3px;
+`;
+
+const Image = styled.img`
+  width: 200px;
+  padding: 5px;
+`;
+
+const MessageLink = styled(Link)`
+  font-size: 16px;
+  color: teal;
+  text-decoration: none;
+  margin-right: 10px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ContractButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
 const AlreadyExchangedProducts = ({product}) => {
    
     const [selected, setselected]=useState(false)
@@ -73,18 +124,32 @@ const AlreadyExchangedProducts = ({product}) => {
 
     return (
         <>
-            <h1>Exchanged Product</h1>
-            <h1>{product.title}</h1>
-            <h1>{Uproduct.title}</h1>
-            {isowner?<label>Send to:{sender.username}</label>:<label>Send to:{owner.username}</label>}
-            <label>Description:{product.desc}</label>
-            <img src={product.img} />
-            <li>
-            {user._id===product.owner_id?<Link to= {`/messege?data=${product.sender_id}`}>Message</Link>:<Link to= {`/messege?data=${product.owner_id}`}>Message</Link>}
-            </li>
-            <label>Return Date:{product.return_date}</label>
-            <button onClick={handleclick}>show contract</button>
-            {selected&& <Contractforexc text={product.contract}/>}
+            <Wrapper>
+      <Title>Exchanged Product</Title>
+      <ProductTitle>{product.title}</ProductTitle>
+      <ProductTitle>{Uproduct.title}</ProductTitle>
+      {user._id === product.owner_id ? (
+        <Label>Send to: {sender.username}</Label>
+      ) : (
+        <Label>Send to: {owner.username}</Label>
+      )}
+      <Label>Description: {product.desc}</Label>
+      <Image src={product.img} />
+      <li>
+        {user._id === product.owner_id ? (
+          <MessageLink to={`/messege?data=${product.sender_id}`}>
+            Message
+          </MessageLink>
+        ) : (
+          <MessageLink to={`/messege?data=${product.owner_id}`}>
+            Message
+          </MessageLink>
+        )}
+      </li>
+      <Label>Return Date: {product.return_date}</Label>
+      <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+      {selected && <Contractforexc text={product.contract} />}
+    </Wrapper>
 
         </>
     )

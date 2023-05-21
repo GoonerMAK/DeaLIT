@@ -17,6 +17,7 @@ import PendingRequests from "./pages/PendingRequests";
 import RequestsExchanges from "./pages/RequestsExchanges"
 import Pendingrequest from "./pages/Pendingrequest"
 import MyexchangeRentproducts from "./pages/MyExchangeRentproducts";
+import Myproducts from "./pages/Myproducts"
 
 import { BrowserRouter as Router, Routes, Route, Redirect, Navigate } from "react-router-dom";
 
@@ -93,6 +94,8 @@ const App = () => {
         <Route path="/messege"
           element={  <Messenger />}>
         </Route>
+
+        <Route path="/myproducts" element={ <Myproducts/> }></Route>
         
 
         {/* <Route path="/success">

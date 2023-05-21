@@ -95,10 +95,19 @@ const Sidebar = () => {
               <SidebarIcon>
                 <StorageIcon />
               </SidebarIcon>
-              <SidebarListItemText>My Products</SidebarListItemText>
+              <SidebarListItemText>My Rented Or Exchanged Products</SidebarListItemText>
             </SidebarListItem>
             </StyledLink>
 
+            <StyledLink to = "/myproducts">
+            <SidebarListItem>
+              <SidebarIcon>
+                <StorageIcon />
+              </SidebarIcon>
+              <SidebarListItemText>My Products</SidebarListItemText>
+            </SidebarListItem>
+            </StyledLink>
+            
             <StyledLink to = "/MyOrders">
             <SidebarListItem>
               <SidebarIcon>

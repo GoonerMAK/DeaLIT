@@ -43,15 +43,12 @@ const ProductList = () => {
   // console.log(location.pathname.split("/")[2]);
   const cat = location.pathname.split("/")[2];
   console.log(cat)
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState('');
   const [sort, setSort] = useState("newest");
 
   const handleFilters = (e) => {
     const value = e.target.value;
-    setFilters({
-      ...filters,
-      [e.target.name]: value,
-    });
+    setFilters(value);
   };
   // console.log(filters)
   
@@ -80,7 +77,7 @@ const ProductList = () => {
             <Option>Others</Option>
           </Select>
 
-          <Select name="Location" onChange={handleFilters}>
+          {/* <Select name="Location" onChange={handleFilters}>
             <Option disabled selected>
               Location
             </Option>
@@ -92,7 +89,7 @@ const ProductList = () => {
             <Option>Sylhet</Option>
             <Option>Mymensingh</Option>
             <Option>Rangpur</Option>
-          </Select>
+          </Select> */}
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>

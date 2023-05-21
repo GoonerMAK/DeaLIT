@@ -7,7 +7,8 @@ const Exchangerequest= require('../models/exchange_request')
 
 // Add new Product for sell
 const addsellProduct = async (req, res) => {
-  const {user_email,title,desc ,img, price, categories} = req.body //, categories
+  const {user_email,title,desc ,img, price, selectedCategories} = req.body //, categories
+  const categories=selectedCategories
   console.log(categories)
   //let emptyFields = []
 
@@ -39,10 +40,10 @@ const addexchangeProduct = async (req, res) => {
   // const categories = req.body.categories
   // const exchangetype = req.body.exchangetype
   // const img = req.files.originalname
-  const {user_email, title,desc ,img, preference, categories, exchangetype} = req.body //, categories
+  const {user_email, title,desc ,img, preference, selectedCategories, exchangetype} = req.body //, categories
   // console.log(req.body)
   
- 
+  const categories=selectedCategories
  
    console.log(user_email, title,desc,img, preference, categories, exchangetype)
   //let emptyFields = []
@@ -72,7 +73,8 @@ const addexchangeProduct = async (req, res) => {
 
 //add product for rent
 const addrentProduct = async (req, res) => {
-  const {user_email,title,desc ,img, price,  prefer, categories} = req.body //, categories
+  const {user_email,title,desc ,img, price,  prefer, selectedCategories} = req.body //, categories
+  const categories=selectedCategories
   console.log(categories)
   //let emptyFields = []
 

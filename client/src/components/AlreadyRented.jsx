@@ -9,6 +9,58 @@ import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
 
 
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 34px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+const ProductTitle = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
+const Label = styled.label`
+  font-size: 19px;
+  color: black;
+  margin-bottom: 3px;
+`;
+
+const Image = styled.img`
+  width: 200px;
+  padding: 5px;
+`;
+
+const MessageLink = styled(Link)`
+  font-size: 16px;
+  color: teal;
+  text-decoration: none;
+  margin-right: 10px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ContractButton = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #f8f4f9;
+  }
+`;
+
+
 const  AlreadyRented = ({product}) => {
    
     const [selected, setselected]=useState(false)
@@ -75,19 +127,24 @@ const  AlreadyRented = ({product}) => {
 
     return (
         <>
-            <h1>Rented Product</h1>
-            
-            <h1>{Uproduct.title}</h1>
-            {isowner&&<label>Rented to:{sender.username}</label>}
-            {issender&&<label>Rented from:{owner.username}</label>}
-            <label>Rented For:{product.renttype} Basis</label>
-            <img src={Uproduct.img} />
-            <li>
-            {user._id===product.owner_id?<Link to= {`/messege?data=${product.sender_id}`}>Message</Link>:<Link to= {`/messege?data=${product.owner_id}`}>Message</Link>}
-            </li>
-            <label>Rent:{product.Price}</label>
-            <button onClick={handleclick}>show contract</button>
-            {selected&& <Contractforexc text={product.contract}/>}
+            <Wrapper>
+      <Title>Rented Product</Title>
+      <ProductTitle>{Uproduct.title}</ProductTitle>
+      {isowner && <Label>Rented to: {sender.username}</Label>}
+      {issender && <Label>Rented from: {owner.username}</Label>}
+      <Label>Rented For: {product.renttype} Basis</Label>
+      <Image src={Uproduct.img} />
+      <li>
+        {user._id === product.owner_id ? (
+          <MessageLink to={`/messege?data=${product.sender_id}`}>Message</MessageLink>
+        ) : (
+          <MessageLink to={`/messege?data=${product.owner_id}`}>Message</MessageLink>
+        )}
+      </li>
+      <Label>Rent: {product.Price}</Label>
+      <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+      {selected && <Contractforexc text={product.contract} />}
+    </Wrapper>
 
         </>
     )

@@ -67,6 +67,7 @@ const Addexchangeproduct = ()=>{
   const [img, setimg] = useState('')
   const[preference, setprefer]= useState('')
   const [categories, setcategories]=useState()
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [error, setError] = useState(null)
   const [exchangetype, setexchangetype] = useState('')
   // const formData=new formData(); 
@@ -75,9 +76,10 @@ const Addexchangeproduct = ()=>{
 {value:"Daily use", label:"Daily use"}
 ]
 
-  function handleSelect(data) {
-      setcategories(data);
-  }
+const handleSelect = (selectedOptions) => {
+  const selectedValues = selectedOptions.map((option) => option.value);
+  setSelectedCategories(selectedValues);
+};
 
   const handleimage= (e)=>{
     e.preventDefault()
@@ -119,7 +121,7 @@ const Addexchangeproduct = ()=>{
       // console.log(formData)
       // console.log(formData.get(img))
        axios.post('http://localhost:3000/api/Addition/addexchange', //formData
-        {user_email, title, desc, img, preference, categories, exchangetype
+        {user_email, title, desc, img, preference, selectedCategories, exchangetype
       }, {
         headers:{
           'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
@@ -196,11 +198,13 @@ const Addexchangeproduct = ()=>{
       />
       <Label>Catagory:</Label>
       <div className="dropdown-container">
-        <Select
+      <Select
           options={optionList}
           placeholder="Select category"
           onChange={handleSelect}
-          value={categories}
+          value={optionList.filter((option) =>
+            selectedCategories.includes(option.value)
+          )}
           isSearchable={true}
           isMulti
         />
