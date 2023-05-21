@@ -67,61 +67,25 @@ router.get("/find/user/:id", async (req, res) => {
 
 //GET ALL PRODUCTS
 router.get("/", async (req, res) => {
-  // const qNew = req.query.new;
-  console.log(req.query.categories)
-  const qCategory=req.query.categories
-  const qfilter=req.query.filters
-  console.log(""+qfilter)
-  console.log(""+qCategory)
-  if(qCategory&&qfilter){
-    try {
-      //   let products;
+  const qCategory = req.query.categories;
+  const qfilter = req.query.filters;
+  console.log("products", qCategory)
+  console.log("filter", qfilter)
+  try {
+    let products;
     
-      //   if (qNew) {
-      //     products = await Product.find().sort({ createdAt: -1 }).limit(1);
-      //   } else if (qCategory) {
-      //     products = await Product.find({
-      //       categories: {
-      //         $in: [qCategory],
-      //       },
-      //     });
-      //   } else {
-        
-           products = await Product.find({ purpose: qCategory.toString(), categories:{$in:[qfilter.toString()]}}); //""+qCategory can be used also
-            // console.log(products)
-      //   }
-    
-        res.status(200).json(products);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-  }else{
-    try {
-      //   let products;
-    
-      //   if (qNew) {
-      //     products = await Product.find().sort({ createdAt: -1 }).limit(1);
-      //   } else if (qCategory) {
-      //     products = await Product.find({
-      //       categories: {
-      //         $in: [qCategory],
-      //       },
-      //     });
-      //   } else {
-        
-           products = await Product.find({ purpose: qCategory.toString()}); //""+qCategory can be used also
-            console.log(products)
-      //   }
-    
-        res.status(200).json(products);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-
+    if (!qfilter) {
+      products = await Product.find({ purpose: qCategory });
+    } else {
+      products = await Product.find({ purpose: qCategory, categories: { $in: [qfilter] } });
+    }
+    console.log(products)
+    res.status(200).json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
   }
-   
 });
-
 //get product request
 router.get("/rentreq/:id", async (req, res)=>{
   try{

@@ -70,6 +70,7 @@ const Pendingrentrequests = ({request}) => {
     const [updated, setupdated] = useState(false)
     const [show, setshow] = useState(false)
     const [owner, setowner] = useState('')
+    const [sender, setsender] = useState('')
     
     useEffect(() => {
       const getProducts = async () => {
@@ -88,7 +89,7 @@ const Pendingrentrequests = ({request}) => {
       const getsender = async () => {
         try{
           const res = await axios.get('http://localhost:3000/api/user/find/'+request.sender_id)
-          setowner(res.data)
+          setsender(res.data)
           console.log(res.data)
         }catch(error)
         {
@@ -123,7 +124,7 @@ const Pendingrentrequests = ({request}) => {
       
       setShowConfirmationRe(true);
     }
-    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} Rented this product to  Reciever ID: ${request.sender_id} `
+    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} Name: ${owner.username}  Rented this product to  Reciever ID: ${request.sender_id} Name: ${sender.username}. And ${request.renttype} Rent is ${request.price}. \n This product was handovered in good condition `
     const handleConfirm = async(e) => {
       e.preventDefault()
       // Perform the action after confirmation

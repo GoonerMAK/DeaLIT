@@ -243,10 +243,12 @@ const Navbar = () => {
 
                 <MenuItem>
                   <ChatContainer>
+                  <Link to="/messege">
                     <Tooltip>Chats</Tooltip>
                      <IconSpan>
                       <Chat/>
                      </IconSpan>
+                     </Link>
                   </ChatContainer>
                   
                   <LeftPadding> </LeftPadding>

@@ -49,7 +49,7 @@ const Price = styled.span`
 
 const FilterContainer = styled.div`
   width: 50%;
-  margin: 30px 0px;
+  margin: 10px 0px;
   display: flex;
   justify-content: space-between;
 `;
@@ -107,6 +107,7 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
+  width: 10%;
   padding: 15px;
   border: 3px solid teal;
   background-color: white;
@@ -229,25 +230,40 @@ const Product = () => {
         </ImgContainer>
 
         <InfoContainer>
-          <Title>{product.title}</Title>
+          <Title> <strong> Product Name: </strong> {product.title}</Title>
+          <Desc> <strong> Description: </strong> {product.desc} </Desc>
           <Desc>
-            {product.desc}
+          {product.categories && product.categories.map((category, index) => (
+          <span key={index}>
+          {category}
+          {index !== product.categories.length - 1 && ', '}
+          </span>
+          ))}
           </Desc>
-          <Price>{product.price}/=</Price>
-          <Title>{owner.username}</Title>
-          
+          {product.price && <Price>{product.price}/=</Price>}
+
+          {product.exchangetype && <Desc>
+            {product.exchangetype}
+          </Desc>}
+          {product.prefer && <Desc>
+            {product.prefer}
+          </Desc>}
+          <Title>Owner name: {owner.username}</Title>
+
+          <FilterContainer> </FilterContainer> 
+
           <Button>
             <Link to= {`/messege?data=${product.user_email}`}>Message</Link>
           </Button>
 
           <FilterContainer>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Color</FilterTitle>
               <FilterColor color="black" />
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
-            </Filter>
-            {/* <Filter>
+            </Filter> }
+            { <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
                 <FilterSizeOption>XS</FilterSizeOption>
@@ -257,7 +273,9 @@ const Product = () => {
                 <FilterSizeOption>XL</FilterSizeOption>
               </FilterSize>
             </Filter> */}
-          </FilterContainer>
+          </FilterContainer> 
+
+
 
           {product.purpose==="Exchange"?<Button onClick={handleexchange}>Exchange</Button>:null}
           {product.purpose==="Rent"?<Button onClick={handlerent}>Rent</Button>:null}

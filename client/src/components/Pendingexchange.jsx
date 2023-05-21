@@ -71,6 +71,9 @@ const Pendingexchange = ({request}) => {
     const [ShowConfirmationRe, setShowConfirmationRe] = useState(false);
     const [updated, setupdated] = useState(false)
     const [show, setshow] = useState(false)
+    const [owner, setowner] = useState('')
+    const [sender, setsender] = useState('')
+    
     
     useEffect(() => {
       const getProducts = async () => {
@@ -85,6 +88,34 @@ const Pendingexchange = ({request}) => {
       };
       getProducts();
     }, [request.objectid]);
+
+    useEffect(() => {
+      const getsender = async () => {
+        try{
+          const res = await axios.get('http://localhost:3000/api/user/find/'+request.sender_id)
+          setsender(res.data)
+          console.log(res.data)
+        }catch(error)
+        {
+          console.log(error)
+        }
+    };
+    getsender();
+    },[request.sender_id]);
+
+    useEffect(() => {
+      const getowner = async () => {
+        try{
+          const res = await axios.get('http://localhost:3000/api/user/find/'+request.owner_id)
+          setowner(res.data)
+          console.log(res.data)
+        }catch(error)
+        {
+          console.log(error)
+        }
+    };
+    getowner();
+    },[request.owner_id]);
     
     const handleclick = (e)=>{
       setselected(current => !current)
@@ -97,7 +128,7 @@ const Pendingexchange = ({request}) => {
       
       setShowConfirmationRe(true);
     }
-    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} and Reciever ID: ${request.sender_id} has agreed to exchange this product. `
+    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} Name: ${owner.username} and Reciever ID: ${request.sender_id} Name: ${sender.username} has agreed to exchange this product. \n This product was handovered in good condition  `
     const handleConfirm = async(e) => {
       e.preventDefault()
       // Perform the action after confirmation
