@@ -1,5 +1,5 @@
 import { Badge } from "@material-ui/core";
-import { Search, ShoppingCartOutlined, Chat, Add } from "@material-ui/icons";
+import { Search, ShoppingCartOutlined, Chat, Add, PersonOutline } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -160,6 +160,26 @@ const AddIconContainer = styled(IconContainer)`
     background: teal;
   }
 `
+const ProfileContainer = styled(IconContainer)`
+  &:hover ${IconSpan},
+  &:hover ${Tooltip},
+  &:hover ${Tooltip}:before {
+    background: teal;
+  }
+`
+
+const Button = styled.button`
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+
+  &:hover{
+      background-color: #f8f4f9;
+  }
+`
 
 
 const Navbar = () => {
@@ -196,6 +216,19 @@ const Navbar = () => {
                 <Right>
 
                 <MenuItem>
+                  <ProfileContainer>
+                    <Tooltip>Profile</Tooltip>
+                     <IconSpan>
+                     <Link to="/Profile">
+                      <PersonOutline/>
+                      </Link>
+                     </IconSpan>
+                  </ProfileContainer>
+                  
+                  <LeftPadding> </LeftPadding>
+                </MenuItem>
+
+                <MenuItem>
                   <AddIconContainer>
                     <Tooltip>Add Product</Tooltip>
                      <IconSpan>
@@ -227,9 +260,9 @@ const Navbar = () => {
                 )}
                 {!user && (
                 <MenuItem>
-                <Link to="/login">Login</Link>
+                <Link to="/login"><Button>Login</Button></Link>
                 <LeftPadding> </LeftPadding>
-                <Link to="/signup">Signup</Link>
+                <Link to="/signup"><Button>Signup</Button></Link>
                 </MenuItem>
                 )}
                   {/* <Link to="/signup">Register</Link>
@@ -265,3 +298,8 @@ const Navbar = () => {
   };
   
   export default Navbar;
+
+
+
+
+// npm audit fix --force
