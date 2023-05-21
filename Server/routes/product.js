@@ -8,6 +8,7 @@ const exchanged = require("../models/Exchanged")
 const { findById } = require("../models/userModel");
 
 
+
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin,} = require("./verifyToken");
 
 const router = require("express").Router();
@@ -262,14 +263,14 @@ router.post("/exchangereq/sender/:id", async(req, res)=>{
     console.log(id)
     const Exchangerequests= await exchangerequest.findById(id)
     if(Exchangerequests.owner_verify){
-      const owner_id=Exchangerequests.owner_email
-      const sender_id=Exchangerequests.sender_email
+      const owner_id=Exchangerequests.owner_id
+      const sender_id=Exchangerequests.sender_id
       const objectid=Exchangerequests.objectid
       const return_date=Exchangerequests.return_date
       const tittle=Exchangerequests.title
       const desc=Exchangerequests.desc
       const img=Exchangerequests.img
-      const Exchanged= await exchanged.create({tittle,desc,img,owner_id, sender_id, objectid, return_date, contract})
+      const Exchanged= await exchanged.create({tittle,desc,img, owner_id, sender_id, objectid, return_date, contract})
       // console.log("for exchange",Exchanged)
       await Product.findByIdAndUpdate(objectid, {type:"Exchanged"})
       await exchangerequest.deleteMany({objectid:objectid})
@@ -302,4 +303,34 @@ router.post("exchangereq/sender/reject/:id", async(req, res)=>{
   }
 })
 
+//get exchanged product
+router.get("/exchanged/find/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Exchanged = await exchanged.find({$or:[{owner_id:req.params.id},{sender_id:req.params.id}]})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Exchanged)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+
+router.get("/rented/find/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Rented = await rented.find({$or:[{owner_id:req.params.id},{sender_id:req.params.id}]})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Rented)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
 module.exports = router;

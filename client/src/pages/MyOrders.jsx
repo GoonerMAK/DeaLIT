@@ -4,6 +4,7 @@ import Announcement from "../components/Announcement";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import styled from "styled-components";
+import Pendingrequest from "../components/Pendingrequest";
 
 
 const MyOrdersPage = styled.div`
@@ -40,7 +41,7 @@ const MyOrders = () => {
         <Sidebar />
         <MyOrdersContainer>
           <Title>The Orders Made</Title>
-          
+          <Pendingrequest/>
         </MyOrdersContainer>
       </MyOrdersPage>
 

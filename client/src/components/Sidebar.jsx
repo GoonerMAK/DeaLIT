@@ -90,12 +90,14 @@ const Sidebar = () => {
             </SidebarListItem>
             </StyledLink>
 
+            <StyledLink to = "/Myrentexchange">
             <SidebarListItem>
               <SidebarIcon>
                 <StorageIcon />
               </SidebarIcon>
               <SidebarListItemText>My Products</SidebarListItemText>
             </SidebarListItem>
+            </StyledLink>
 
             <StyledLink to = "/MyOrders">
             <SidebarListItem>

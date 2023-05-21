@@ -4,6 +4,60 @@ import styled from "styled-components";
 import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
 
+const Container = styled.div`
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e9e9e9;
+  padding: 50px;
+
+  margin-top: 20px;
+  margin-bottom: 50px;
+`;
+
+const Title = styled.h3`
+  text-align: center;
+`;
+
+const Label = styled.label`
+  font-weight: bold;
+`;
+
+const Input= styled.input`
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+margin-bottom: 10px;
+`;
+
+const FileInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  margin-bottom: 10px;
+`;
+
+const Selection= styled.select`
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+margin-bottom: 10px;
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px 20px;
+  background-color: teal;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top:10px;
+  &:hover {
+    background-color: rgb(1, 163, 163);
+  }
+`;
+
 const Addsell= ()=>{
     const { user } = useAuthContext()
     const [title, setTitle] = useState('')
@@ -47,7 +101,8 @@ const Addsell= ()=>{
         e.preventDefault()
         console.log(img)
       //const formData = new FormData()
-      const user_email= user.email
+      const user_email= user.user._id
+      handleimagesave()
       
       
 
@@ -82,34 +137,35 @@ const Addsell= ()=>{
     }
 
     return (
+      <Container>
         <form className="create" onSubmit={handleSubmit}>
-          <h3>Add a New Product for sell</h3>
+          <Title><h3>Add a New Product For Sell</h3></Title>
     
-          <label>Product Title:</label>
-          <input 
+          <Label>Product Title:</Label>
+          <Input 
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             // className={emptyFields.includes('title') ? 'error' : ''}
           />
           
-          <label>price :</label>
-          <input 
+          <Label>Price :</Label>
+          <Input 
             type="number"
             onChange={(e) => setprice(e.target.value)}
             value={price}
             // className={emptyFields.includes('load') ? 'error' : ''}
           />
     
-          <label>desc:</label>
-          <input 
+          <Label>Description:</Label>
+          <Input 
             type="text"
             onChange={(e) => setdesc(e.target.value)}
             value={desc}
             // className={emptyFields.includes('reps') ? 'error' : ''}
           />
-          <label>img:</label>
-          <input 
+          <Label>Image:</Label>
+          <FileInput 
           type="file"
           name="photos"
           onChange={handleimage}
@@ -117,6 +173,7 @@ const Addsell= ()=>{
           multiple
         // className={emptyFields.includes('reps') ? 'error' : ''}
         />
+        <Label>Catagory:</Label>
           <div className="dropdown-container">
             <Select
               options={optionList}
@@ -128,9 +185,10 @@ const Addsell= ()=>{
             />
           </div>
     
-          <button>Add Product</button>
+          <SubmitButton>Add Product</SubmitButton>
           {error && <div className="error">{error}</div>}
         </form>
+        </Container>
       )
 
 

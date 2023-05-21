@@ -2,9 +2,22 @@ import { useState } from "react"
 import Addexchangeproduct from "../components/Addexchangeproduct";
 import Addsell from "../components/Addsell";
 import Addrent from "../components/Addrent";
+import styled from "styled-components"
+import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
+const Selection= styled.select`
+width: 20%;
+padding: 10px;
+border: 1px solid #ccc;
+margin-bottom: 10px;
+margin-left: 10px;
+`;
 
+const Container = styled.div`
+  height:115vh;
+`;
 
 const Addition = ()=>{
     const[selected, setselected]=useState('')
@@ -33,23 +46,26 @@ const Addition = ()=>{
         }
     }
     return(
-    <container>
+        <>
+    <Container>
+        <Announcement />
     <Navbar/>
         
         <div>
-        <select  value={selected} onChange={handleselect}>
+        <Selection  value={selected} onChange={handleselect}>
             <option value="Sell">Sell</option>
             <option value="Rent">Rent</option>
             <option value="Exchange">Exchange</option>      {/*value={exchange} onSelect={setexchange(true)}*/}
             <option>others</option>
-        </select>
+        </Selection>
         </div>
         {exchange && <Addexchangeproduct/>}
         {sell && <Addsell/>}
         {rent && <Addrent/>}
         
-    </container>
-        
+    </Container>
+    <Footer />
+    </>
     )
 }
 export default Addition

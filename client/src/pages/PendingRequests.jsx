@@ -4,6 +4,7 @@ import Announcement from "../components/Announcement";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import styled from "styled-components";
+import RequestsExchanges from "../components/RequestsExchanges"
 
 
 const PendingRequestsPage = styled.div`
@@ -40,7 +41,7 @@ const PendingRequests = () => {
         <Sidebar />
         <PendingRequestsContainer>
           <Title>Pending Requests</Title>
-          
+          <RequestsExchanges/>
         </PendingRequestsContainer>
       </PendingRequestsPage>
 
