@@ -1,18 +1,16 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation , Link} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { publicRequest } from "../requestMethods";
-import Exchangerequest from "../components/Exchangerequest"
-import axios from "axios";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-
-
+import Exchangerequest from "../components/Exchangerequest"
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -93,6 +91,7 @@ const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
+  cursor : pointer;
 `;
 
 const Amount = styled.span`
@@ -104,20 +103,21 @@ const Amount = styled.span`
   align-items: center;
   justify-content: center;
   margin: 0px 5px;
+  cursor : text;
 `;
 
 const Button = styled.button`
-  padding: 10px;
+  padding: 15px;
   border: 3px solid teal;
   background-color: white;
   cursor: pointer;
   font-weight: 500;
-  font-size: 17px;
 
   &:hover{
       background-color: #f8f4f4;
   }
 `;
+
 
 
 const Product = () => {
@@ -165,9 +165,11 @@ const Product = () => {
   const handleexchange = (e)=>{
       setisexchange(current => !current)
   }
+
   const handlerent = (e) => {
     setisrent(current => !current)
   }
+
 
   const handleQuantity = (type) => {
     if (type === "dec")  // decrease 
@@ -193,8 +195,11 @@ const Product = () => {
       <Navbar />
 
       <Wrapper>
+
         <ImgContainer>
+          
           <Image src={product.img} />
+          
         </ImgContainer>
 
         <InfoContainer>
@@ -234,19 +239,18 @@ const Product = () => {
 
           <AddContainer>
             <AmountContainer>
-
-            <Remove onClick={() => handleQuantity("dec")} />
+              <Remove onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
             <Button onClick={handleClick} >ADD TO CART</Button>
-
+            
           </AddContainer>:null}
         {isexchange&&<Exchangerequest Product={product} />}
 
         </InfoContainer>
 
-      </Wrapper>
+      </Wrapper> 
 
       <Newsletter />
       <Footer />

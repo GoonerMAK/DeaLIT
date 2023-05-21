@@ -61,9 +61,9 @@ const Addexchangeproduct = ()=>{
     const handleSubmit=  (e)=>{
         e.preventDefault()
         //add to the backend part 
+        
         handleimagesave()
-        console.log(img)
-         const user_email= user.user._id
+         const user_email= user.email
         // formData.append("user_email",user_email)
         // formData.append("title",title)
         // formData.append("desc",desc)

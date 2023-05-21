@@ -1,12 +1,14 @@
 import React from "react";
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove, Delete } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { removeProduct } from "../redux/cartRedux";
+import { Dispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -51,6 +53,8 @@ const Bottom = styled.div`
 
 const Info = styled.div`
   flex: 3;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 const Product = styled.div`
@@ -150,9 +154,27 @@ const Button = styled.button`
   cursor : pointer;
 `;
 
+const RemoveButton = styled.button`
+  width: 10%;
+  height: 50px;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor : pointer;
+    
+  margin-top: 35px;
+`;
+
+
 const Cart = () => {
 
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const handleRemoveProduct = (productId) => {
+    dispatch(removeProduct(productId));
+  };
+
 
   return (
     <Container>
@@ -180,7 +202,7 @@ const Cart = () => {
 
             {cart.products.map((product)=>(
             
-              <Product>
+              <Product key={product.id} product={product} handleRemoveProduct={handleRemoveProduct}>
 
               <ProductDetail>
                 <Image src={product.img} />
@@ -204,6 +226,8 @@ const Cart = () => {
                 </ProductAmountContainer>
                 <ProductPrice> {product.price*product.quantity} /=</ProductPrice>
               </PriceDetail>
+
+              <RemoveButton onClick={() => handleRemoveProduct(product.id)}>REMOVE</RemoveButton>
             
             </Product>
 
