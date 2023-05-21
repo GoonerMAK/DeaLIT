@@ -230,10 +230,12 @@ const Navbar = () => {
 
                 <MenuItem>
                   <AddIconContainer>
-                    <Tooltip>Add Product</Tooltip>
+                  <Tooltip>Add Product</Tooltip>
+                    <Link to="/addition">
                      <IconSpan>
                       <Add/>
                      </IconSpan>
+                     </Link>
                   </AddIconContainer>
                   
                   <LeftPadding> </LeftPadding>

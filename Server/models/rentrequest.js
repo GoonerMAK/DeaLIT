@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 
 const rentrequestSchema = new mongoose.Schema(
   {
-    owner_email: {
+    owner_id: {
         type: String,
         //required: true
       },
-      sender_email: {
+      sender_id: {
         type: String,
         //required: true
       },
     objectid:{type: String},
-    return_date:{type: Date},
+    renttype:{type: String},
     owner_verify:{type: Boolean},
     sender_verify:{type:Boolean},
     proposed_price:{type:Number}

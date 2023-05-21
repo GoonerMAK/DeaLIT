@@ -1,6 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -133,6 +133,9 @@ const Product = () => {
   const [owner, setowner]=useState('')
   const dispatch = useDispatch();
 
+  const upperuser = JSON.parse(localStorage.getItem('user'))
+  const user=upperuser.user
+
 
   useEffect(() => {
     const getProduct = async () => {
@@ -162,12 +165,35 @@ const Product = () => {
   },[product.user_email]);
 
 
+
   const handleexchange = (e)=>{
       setisexchange(current => !current)
   }
 
-  const handlerent = (e) => {
-    setisrent(current => !current)
+  const handlerent = async(e) => {
+    e.preventDefault()
+    const owner_id=owner._id
+    const sender_id=user._id 
+    console.log("sender",owner_id)
+    const objectid=product._id
+    console.log("product",objectid)
+    const proposed_price=product.price
+    const renttype=product.prefer
+    await axios.post('http://localhost:3000/api/Addition/rentrequest', 
+        {sender_id, owner_id, objectid,proposed_price,renttype}
+        ).then((response)=>{
+            console.log(response)
+            setisrent(true)
+          }).catch((error)=>{
+            if (error.response) {
+              console.log(error.response);
+              console.log("server responded");
+            } else if (error.request) {
+              console.log("network error");
+            } else {
+              console.log(error);
+            }
+          })
   }
 
 
@@ -247,6 +273,7 @@ const Product = () => {
             
           </AddContainer>:null}
         {isexchange&&<Exchangerequest Product={product} />}
+        {isrent&&<label>rent request has been sent</label>}
 
         </InfoContainer>
 

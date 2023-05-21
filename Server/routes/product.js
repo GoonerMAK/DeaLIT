@@ -83,11 +83,11 @@ router.get("/", async (req, res) => {
 });
 
 //get product request
-router.get("/rentreq/:email", async (req, res)=>{
+router.get("/rentreq/:id", async (req, res)=>{
   try{
-    const email=req.params.email
-    console.log(email)
-    rentrequests= await rentrequest.find({owner_email:email.toString()})
+    const Id=req.params.id
+    console.log(Id)
+    const rentrequests= await rentrequest.find({owner_id:req.params.id})
     // const products=await Product.findById(rentrequests[0].objectid)
     // console.log(products)
     res.status(200).json(rentrequests)
@@ -102,11 +102,9 @@ router.post("/rentreq/verifyowner/:id", async(req, res)=>{
   try{
     const id=req.params.id
     console.log(id)
-    const {price}=req.body
-    var return_date=req.body.return_date
-    return_date= new Date(return_date)
+    const {price, renttype}=req.body
     console.log(price)
-    await rentrequest.findByIdAndUpdate(id, {owner_verify:true, proposed_price:price, return_date:return_date})
+    await rentrequest.findByIdAndUpdate(id, {owner_verify:true, proposed_price:price, renttype:renttype})
     res.status(200).json("upadated")
     // await rentrequest.updateOne({_id:id}, {$set: {owner_verify:true, proposed_price:price}})
     //Add nodemailer here
@@ -117,23 +115,74 @@ router.post("/rentreq/verifyowner/:id", async(req, res)=>{
   }
 })
 
-router.post("/rentreq/verifysender/:id", async(req, res)=>{
+router.get("/rentreq/pending/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const Rentrequests = await rentrequest.find({sender_id:req.params.id})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Rentrequests)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+
+//find if this user already updated any other request
+router.get("/rentreq/find/:id", async (req, res)=>{
+  try{
+    const Id=req.params.id
+    console.log(Id)
+    const  Rentrequests= await rentrequest.find({owner_id:req.params.id, owner_verify:true})
+    // const products=await Product.findById(rentrequests[0].objectid)
+    // console.log(products)
+    res.status(200).json(Rentrequests)
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+}
+)
+
+router.post("/rentreq/sender/:id", async(req, res)=>{
   try{
     const id=req.params.id
+    const contract=req.body.text
     console.log(id)
     const rentrequests= await rentrequest.findById(id)
     if(rentrequests.owner_verify){
       //add nodemailer here
-      const owner_email=rentrequests.owner_email
-      const sender_email=rentrequests.sender_email
+      const owner_id=rentrequests.owner_id
+      const sender_id=rentrequests.sender_id
       const objectid=rentrequests.objectid
-      const return_date=rentrequests.return_date
+      const renttype=rentrequests.renttype
       const rent_price=rentrequests.proposed_price
-      const Rented= await rented.create({owner_email, sender_email, objectid, return_date, rent_price})
+      const Rented= await rented.create({owner_id, sender_id, objectid, renttype, rent_price,contract})
       console.log(Rented)
-      await Product.findByIdAndUpdate(objectid, {type:Rented})
+      await Product.findByIdAndUpdate(objectid, {type:"Rented"})
       await rentrequest.findByIdAndDelete(id)
       res.status(200).json(Rented)
+    }else{
+      throw Error('Owner has not varified yet')
+    }
+    
+  }catch (err){
+    res.status(500).json(err)
+    console.log(err)
+  }
+})
+
+//exchange request reject by customer
+router.post("rentreq/sender/reject/:id", async(req, res)=>{
+  try{
+    const id=req.params.id
+    console.log(id)
+    const Rentrequests= await rentrequest.findById(id)
+    if(Rentrequests.owner_verify){
+      await rentrequest.findByIdAndDelete(id)
+      res.status(200).json("deleted")
     }else{
       throw Error('Owner has not varified yet')
     }

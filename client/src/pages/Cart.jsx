@@ -172,7 +172,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const handleRemoveProduct = (productId) => {
-    dispatch(removeProduct(productId));
+    // dispatch(removeProduct(productId));
   };
 
 

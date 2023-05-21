@@ -2,17 +2,18 @@ const mongoose = require("mongoose");
 
 const rentSchema = new mongoose.Schema(
   {
-    owner_email: {
+    owner_id: {
         type: String,
         //required: true
       },
-      sender_email: {
+      sender_id: {
         type: String,
         //required: true
       },
     objectid:{type: String},
-    return_date:{type: Date},
-    rent_price:{type:Number}
+    renttype:{type: String},
+    rent_price:{type:Number},
+    contract:{type:String}
   },
   { timestamps: true }
 );

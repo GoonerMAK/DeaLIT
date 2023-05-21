@@ -120,22 +120,20 @@ const exchangerequest = async (req, res) => {
 
 }
 
+//sent request for rent
 const rentngerequest = async (req, res) => {
-  const {owner_email, sender_email, objectid, proposed_price} = req.body 
-  var return_date=req.body.return_date
+  const {owner_id, sender_id, renttype, objectid, proposed_price} = req.body 
   console.log(req.body)
-  return_date= new Date(return_date)
-  console.log(return_date)
   const owner_verify =false
   const sender_verify = false
-  console.log(owner_email, sender_email, objectid, return_date)
-  if(!owner_email|| !sender_email|| !objectid|| !return_date){
+  console.log(owner_id, sender_id, objectid, renttype)
+  if(!owner_id|| !sender_id|| !objectid|| !renttype){
     return res.status(400).json({ error: 'Please fill in all the fields' })
   }
   try {
     // const user_id = req.user._id
     
-    const rentrequest = await Rentrequest.create({owner_email, sender_email, objectid, return_date, proposed_price, owner_verify, sender_verify})
+    const rentrequest = await Rentrequest.create({owner_id, sender_id, objectid, renttype, proposed_price, owner_verify, sender_verify})
     console.log(rentrequest) //, categories
     res.status(200).json(rentrequest)
   } catch (error) {
