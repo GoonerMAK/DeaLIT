@@ -136,7 +136,7 @@ const Arrow = styled.div`
 `;
 
 
-const Product = () => {
+const Product = ({}) => {
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -173,8 +173,6 @@ const Product = () => {
       addProduct({ ...product, quantity, Price })
     );
   };
-
-
 
 
   return (

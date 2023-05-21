@@ -7,8 +7,13 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Addition from "./pages/Addition";
 import Messenger from "./pages/messenger/Messenger";
-
-
+import Profile from "./pages/Profile";
+import AddExchangeItem from "./pages/AddExchangeItem";
+import AddRentItem from "./pages/AddRentItem";
+import AddSellItem from "./pages/AddSellItem";
+import EditProfile from "./pages/EditProfile";
+import MyOrders from "./pages/MyOrders";
+import PendingRequests from "./pages/PendingRequests";
 
 import { BrowserRouter as Router, Routes, Route, Redirect,Navigate } from "react-router-dom";
 
@@ -32,9 +37,30 @@ const App = () => {
         </Route>
 
         <Route path="/product/:id" element={<Product/>}>          
-          
         </Route>
+
         <Route path="/cart" element={<Cart/>}>
+        </Route>
+
+        <Route path="/Profile" element={<Profile/>}>
+        </Route>
+
+        <Route path="/AddExchangeItem" element={<AddExchangeItem/>}>
+        </Route>
+
+        <Route path="/AddRentItem" element={<AddRentItem/>}>
+        </Route>
+
+        <Route path="/AddSellItem" element={<AddSellItem/>}>
+        </Route>
+
+        <Route path="/EditProfile" element={<EditProfile/>}>
+        </Route>
+
+        <Route path="/MyOrders" element={<MyOrders/>}>
+        </Route>
+
+        <Route path="/PendingRequests" element={<PendingRequests/>}>
         </Route>
 
         <Route 
