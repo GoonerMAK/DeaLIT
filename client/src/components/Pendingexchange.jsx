@@ -195,7 +195,7 @@ const Pendingexchange = ({request}) => {
       <ReturnDate> <strong>Return Date:</strong> {returndate}</ReturnDate>
       <Image src={request.img} />
       <li>
-        <MessageLink to={`/message?data=${request.owner_id}`}>Message</MessageLink>
+        <MessageLink to={`/messege?data=${request.owner_id}`}>Message</MessageLink>
       </li>
 
       {request.owner_verify ? (
@@ -227,7 +227,7 @@ const Pendingexchange = ({request}) => {
       )}
 
       {(request.sender_verify || updated) && (
-        <button onClick={handleShowContract}>Show Contract</button>
+        <button onClick={handleclick}>Show Contract</button>
       )}
 
       {selected && <Contractforexc text={text} />}

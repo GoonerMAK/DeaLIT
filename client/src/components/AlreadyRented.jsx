@@ -251,9 +251,9 @@ const  AlreadyRented = ({product}) => {
 
                    <MessageButton> 
                     {user._id === product.owner_id ? (
-                    <Link to={`/message?data=${product.sender_id}`}>Message</Link>
+                    <Link to={`/messege?data=${product.sender_id}`}>Message</Link>
                     ) : (
-                      <Link to={`/message?data=${product.owner_id}`}>Message</Link>
+                      <Link to={`/messege?data=${product.owner_id}`}>Message</Link>
                     )}
                    </MessageButton>
 
