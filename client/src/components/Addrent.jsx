@@ -74,6 +74,7 @@ const Addrent= ()=>{
   const[prefer, setprefer]= useState('')
   const [categories, setcategories]=useState()
   const [error, setError] = useState(null)
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const optionList=[{value:"Electronics", label:"Electronics"},
   {value:"Pc Components", label:"Pc Components"},
@@ -86,9 +87,10 @@ const Addrent= ()=>{
   {value:"Others", label:"Others"}
   ]
 
-  function handleSelect(data) {
-      setcategories(data);
-  }
+  const handleSelect = (selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    setSelectedCategories(selectedValues);
+  };
 
   const handleimage= (e)=>{
     e.preventDefault()
@@ -125,7 +127,7 @@ const Addrent= ()=>{
     // console.log(formData)
     // console.log(formData.get(img))
      axios.post('http://localhost:3000/api/Addition/addrent', //formData
-      {user_email, title, desc, img, price, prefer, categories
+      {user_email, title, desc, img, price, prefer, selectedCategories
     }, {
       headers:{
         'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  

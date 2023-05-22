@@ -73,6 +73,7 @@ const Addsell= ()=>{
     const [imgfile, setimgfile]=useState('')
     const [categories, setcategories]=useState()
     const [error, setError] = useState(null)
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     const optionList=[{value:"Electronics", label:"Electronics"},
   {value:"Pc Components", label:"Pc Components"},
@@ -85,10 +86,11 @@ const Addsell= ()=>{
   {value:"Others", label:"Others"}
   ]
 
+  const handleSelect = (selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    setSelectedCategories(selectedValues);
+  };
 
-    function handleSelect(data) {
-        setcategories(data);
-    }
     const handleimage= (e)=>{
       e.preventDefault()
       // const formData = new FormData()
@@ -123,7 +125,7 @@ const Addsell= ()=>{
       // console.log(formData)
       // console.log(formData.get(img))
        axios.post('http://localhost:3000/api/Addition/addsell', //formData
-        {user_email, title, desc, img, price, categories
+        {user_email, title, desc, img, price, selectedCategories
       }, {
         headers:{
           'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
