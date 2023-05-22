@@ -217,7 +217,7 @@ const Navbar = () => {
                 <Right>
 
                 
-
+              {user&&
                 <MenuItem>
                   <AddIconContainer>
                     <Tooltip>Add Product</Tooltip>
@@ -230,7 +230,9 @@ const Navbar = () => {
                   
                   <LeftPadding> </LeftPadding>
                 </MenuItem>  
-
+              }
+              
+              {user&&
                 <MenuItem>
                   <ChatContainer>
                   <Link to="/messege">
@@ -243,6 +245,7 @@ const Navbar = () => {
                   
                   <LeftPadding> </LeftPadding>
                 </MenuItem>
+              }
 
 
                 {user && (
