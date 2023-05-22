@@ -21,7 +21,6 @@ const MyOrdersContainer = styled.div`
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-
   height: 100%;
 `;
 
@@ -45,24 +44,24 @@ const Myproducts = () => {
         );
         // console.log(res);
         setitems(res.data);
-        
+
       } catch (err) {}
     };
     getProducts();
   }, [user._id]);
   // console.log(filters)
-  
-  
+
+
   return (
-    
+
 <>
       <Announcement />
       <Navbar />
-      
+
       <MyOrdersPage>
         <Sidebar />
         <MyOrdersContainer>
-          <Title>The Orders Made</Title>
+          <Title>The Products</Title>
           {items.map((item) => (<Product item={item} key={item.id} />))}
         </MyOrdersContainer>
       </MyOrdersPage>
@@ -74,5 +73,3 @@ const Myproducts = () => {
 }
 
 export default Myproducts
-
-

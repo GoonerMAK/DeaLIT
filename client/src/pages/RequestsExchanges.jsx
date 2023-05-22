@@ -2,8 +2,17 @@ import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Requestsexchange from "../components/Requestsexchange"
 import RequestsRents from "../components/RequestsRents";
-
 import { useAuthContext } from '../hooks/useAuthContext'
+import styled from "styled-components";
+
+const Label = styled.label`
+  font-size: 19px;
+  color: black;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+`;
 
 
 const RequestsExchanges=()=>{
@@ -75,7 +84,7 @@ const RequestsExchanges=()=>{
         <RequestsRents  key={request._id} request={request} />
       ))}
       
-        </>:<label>no requesting products</label>}
+        </>:<Label>no requesting products</Label>}
         </>
       )
     

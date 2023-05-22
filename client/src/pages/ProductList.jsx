@@ -68,12 +68,13 @@ const ProductList = () => {
               Categories
             </Option>
             <Option>Electronics</Option>
-            <Option>Clothes</Option>
+            <Option>Pc Components</Option>
             <Option>Sports</Option>
-            <Option>Grooming</Option>
-            <Option>Beauty</Option>
+            <Option>Gadgets</Option>
+            <Option>Laptop</Option>
             <Option>Home & Living</Option>
             <Option>Education</Option>
+                <Option>phone</Option>
             <Option>Others</Option>
           </Select>
 

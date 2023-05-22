@@ -11,6 +11,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 
 const Wrapper = styled.div`
   padding: 10px;
+  display: flex;
 `;
 
 const Title = styled.h1`
@@ -20,9 +21,27 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const ProductTitle = styled.h1`
-  font-size: 24px;
-  color: #333;
+const RequestContainer = styled.div`
+  margin: 2rem auto;
+  width: 1000px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+  height: 100%;
+`;
+
+const Info = styled.div`
+  flex: 3;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  &:hover {
+    background-color: lightgray;
+  }
+
+  cursor: pointer;
 `;
 
 const Label = styled.label`
@@ -31,10 +50,85 @@ const Label = styled.label`
   margin-bottom: 3px;
 `;
 
+const VerificationLabel = styled.label`
+  font-size: 19px;
+  color: black;
+  margin-left: 30px;
+  margin-top: 8px;
+
+`;
+
+const Product = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;
+
+const ProductDetail = styled.div`
+  flex: 2;
+  display: flex;
+`;
+
 const Image = styled.img`
   width: 200px;
   padding: 5px;
 `;
+
+const Details = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
+const Input = styled.input`
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  margin-left: 200px;
+
+`;
+
+const MessageButton = styled.button`
+padding: 8px;
+border: 3px solid teal;
+background-color: white;
+cursor: pointer;
+font-weight: 700;
+font-size: 15px;
+width: 10%;
+
+margin-left: 290px;
+
+&:hover{
+    background-color: #f8f4f9;
+}
+`;
+
+const VerifyButton = styled.button`
+padding: 8px;
+border: 3px solid teal;
+background-color: white;
+cursor: pointer;
+font-weight: 700;
+font-size: 15px;
+width: 10%;
+
+margin-left: 50px;
+
+&:hover{
+    background-color: #f8f4f9;
+}
+`;
+
+
+const ProductTitle = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
 
 const MessageLink = styled(Link)`
   font-size: 16px;
@@ -59,7 +153,6 @@ const ContractButton = styled.button`
     background-color: #f8f4f9;
   }
 `;
-
 
 const  AlreadyRented = ({product}) => {
    
@@ -127,24 +220,58 @@ const  AlreadyRented = ({product}) => {
 
     return (
         <>
-            <Wrapper>
-      <Title>Rented Product</Title>
-      <ProductTitle>{Uproduct.title}</ProductTitle>
-      {isowner && <Label>Rented to: {sender.username}</Label>}
-      {issender && <Label>Rented from: {owner.username}</Label>}
-      <Label>Rented For: {product.renttype} Basis</Label>
-      <Image src={Uproduct.img} />
-      <li>
-        {user._id === product.owner_id ? (
-          <MessageLink to={`/messege?data=${product.sender_id}`}>Message</MessageLink>
-        ) : (
-          <MessageLink to={`/messege?data=${product.owner_id}`}>Message</MessageLink>
-        )}
-      </li>
-      <Label>Rent: {product.Price}</Label>
-      <ContractButton onClick={handleclick}>Show Contract</ContractButton>
-      {selected && <Contractforexc text={product.contract} />}
-    </Wrapper>
+
+<Wrapper>
+          <RequestContainer>
+             <Title>Rented Product</Title>
+
+              <Info>
+                <Product>
+
+                  <ProductDetail>
+                   <Image src={Uproduct.img} />
+                   
+                   <Details>
+                   <Label> <strong>Product: </strong> {Uproduct.title}</Label>
+                   {isowner && <Label>Rented to: {sender.username}</Label>}
+                   {issender && <Label>Rented from: {owner.username}</Label>}
+                   <Label>Rented For: {product.renttype} Basis</Label>
+                   <Label>Rent: {product.Price}</Label>
+                   <Label> <strong>Description: </strong> {product.desc}</Label>
+                   </Details>
+
+                  </ProductDetail>
+
+                  </Product>
+
+
+                  <Product>
+
+                    <ProductDetail>
+
+                   <MessageButton> 
+                    {user._id === product.owner_id ? (
+                    <Link to={`/message?data=${product.sender_id}`}>Message</Link>
+                    ) : (
+                      <Link to={`/message?data=${product.owner_id}`}>Message</Link>
+                    )}
+                   </MessageButton>
+
+                    </ProductDetail>
+
+                   </Product>
+                     
+
+                    <Product>
+                    <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+                    {selected && <Contractforexc text={product.contract} />}
+                   
+                   </Product>
+                
+              </Info>
+         </RequestContainer>
+        </Wrapper>
+
 
         </>
     )

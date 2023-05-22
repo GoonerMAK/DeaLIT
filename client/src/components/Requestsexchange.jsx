@@ -253,7 +253,7 @@ const Requestsexchange = ({request}) => {
 
                     <ProductDetail>
 
-                   <MessageButton> <Link to={`/messege?data=${request.sender_id}`}>Message</Link> </MessageButton>
+                   <MessageButton> <Link to={`/message?data=${request.sender_id}`}>Message</Link> </MessageButton>
                                       
                     {show || request.owner_verify || updated ? (
                         <VerificationLabel>This Product is Already Verified</VerificationLabel>

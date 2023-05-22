@@ -73,8 +73,7 @@ const Pendingexchange = ({request}) => {
     const [show, setshow] = useState(false)
     const [owner, setowner] = useState('')
     const [sender, setsender] = useState('')
-    
-    
+
     useEffect(() => {
       const getProducts = async () => {
         try {
@@ -88,7 +87,7 @@ const Pendingexchange = ({request}) => {
       };
       getProducts();
     }, [request.objectid]);
-
+    
     useEffect(() => {
       const getsender = async () => {
         try{
@@ -116,7 +115,8 @@ const Pendingexchange = ({request}) => {
     };
     getowner();
     },[request.owner_id]);
-    
+
+
     const handleclick = (e)=>{
       setselected(current => !current)
     }
@@ -128,7 +128,13 @@ const Pendingexchange = ({request}) => {
       
       setShowConfirmationRe(true);
     }
-    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} Name: ${owner.username} and Reciever ID: ${request.sender_id} Name: ${sender.username} has agreed to exchange this product. \n This product was handovered in good condition  `
+
+    const text= `this is a contract for ${product.title}.
+     Where Owner ID: ${request.owner_id} 
+     Name: ${owner.username} and Reciever ID: ${request.sender_id} 
+     Name: ${sender.username} has agreed to exchange this product. 
+     \n This product was handovered in good condition `
+
     const handleConfirm = async(e) => {
       e.preventDefault()
       // Perform the action after confirmation
@@ -189,7 +195,7 @@ const Pendingexchange = ({request}) => {
       <ReturnDate> <strong>Return Date:</strong> {returndate}</ReturnDate>
       <Image src={request.img} />
       <li>
-        <MessageLink to={`/messege?data=${request.owner_id}`}>Message</MessageLink>
+        <MessageLink to={`/message?data=${request.owner_id}`}>Message</MessageLink>
       </li>
 
       {request.owner_verify ? (
@@ -221,7 +227,7 @@ const Pendingexchange = ({request}) => {
       )}
 
       {(request.sender_verify || updated) && (
-        <button onClick={handleclick}>Show Contract</button>
+        <button onClick={handleShowContract}>Show Contract</button>
       )}
 
       {selected && <Contractforexc text={text} />}

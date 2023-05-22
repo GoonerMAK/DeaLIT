@@ -6,23 +6,33 @@ import styled from "styled-components"
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Newsletter from "../components/Newsletter";
+
 
 const Selection= styled.select`
 width: 20%;
 padding: 10px;
 border: 1px solid #ccc;
 margin-bottom: 10px;
-margin-left: 10px;
+margin-left: 600px;
+border-radius:5px;
+
+margin-top: 20px;
 `;
 
 const Container = styled.div`
-  height:115vh;
+  height: 105vh;
+  background-image: url(https://i.ibb.co/rFCz9rL/addition-page-background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
+
 const Addition = ()=>{
+
     const[selected, setselected]=useState('')
     const[exchange, setexchange]=useState('')
-    const[sell, setsell]= useState('')
+    const[sell, setsell]= useState(true)
     const[rent, setrent]=useState('')
     
 
@@ -49,7 +59,7 @@ const Addition = ()=>{
         <>
     <Container>
         <Announcement />
-    <Navbar/>
+    <Navbar/>          
         
         <div>
         <Selection  value={selected} onChange={handleselect}>
@@ -62,8 +72,9 @@ const Addition = ()=>{
         {exchange && <Addexchangeproduct/>}
         {sell && <Addsell/>}
         {rent && <Addrent/>}
-        
+
     </Container>
+    <Newsletter/>
     <Footer />
     </>
     )

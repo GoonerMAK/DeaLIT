@@ -27,6 +27,8 @@ const Info = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
+
 `;
 
 const Title = styled.h1`
@@ -35,14 +37,20 @@ const Title = styled.h1`
 `;
 
 const Button = styled.button`
-    border:none;
-    padding: 10px;
-    background-color: white;
-    color:gray;
-    cursor: pointer;
-    font-weight: 600;
-    width: 150%;
-    justify-content: center;
+  padding: 8px;
+  border: 3px solid teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  color: black;
+  width: 150%;
+  justify-content: center;
+  
+  &:hover{
+      background-color: #f8f4f9;
+  }
+    
 `;
 
 const Circle = styled.div`
@@ -50,7 +58,7 @@ const Circle = styled.div`
   height: 20px;
   border-radius: 50%;
   background-color: black;
-  opacity: 20%;
+  opacity: 100%;
 `;
 
 const CategoryItem = ({item}) => {
@@ -58,14 +66,16 @@ const CategoryItem = ({item}) => {
     <Container>
       
       <Image src={item.img} />
+
       <Info>
+
           <Title>{item.title} </Title>
           <Link to={`/products/${item.cat}`}>
           
           <Button>GO</Button>
-          
-          
+
           </Link>
+
       </Info>
       
     </Container>

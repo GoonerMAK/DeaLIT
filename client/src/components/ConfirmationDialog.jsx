@@ -7,7 +7,7 @@ const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
     padding: '16px',
     maxWidth: '400px',
     margin: '0 auto',
-    background: '#fff',
+    background: '#f8f4f9',
   };
 
   const messageStyle = {

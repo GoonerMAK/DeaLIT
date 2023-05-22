@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const Container = styled.div`
     height: 65px;
+    background-color: aliceblue;
 `
 
 const Wrapper = styled.div`
@@ -215,22 +216,11 @@ const Navbar = () => {
 
                 <Right>
 
-                <MenuItem>
-                  <ProfileContainer>
-                    <Tooltip>Profile</Tooltip>
-                     <IconSpan>
-                     <Link to="/Profile">
-                      <PersonOutline/>
-                      </Link>
-                     </IconSpan>
-                  </ProfileContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>
+                
 
                 <MenuItem>
                   <AddIconContainer>
-                  <Tooltip>Add Product</Tooltip>
+                    <Tooltip>Add Product</Tooltip>
                     <Link to="/addition">
                      <IconSpan>
                       <Add/>
@@ -254,14 +244,36 @@ const Navbar = () => {
                   <LeftPadding> </LeftPadding>
                 </MenuItem>
 
-                <MenuItem>
 
                 {user && (
                   <div>
-                  <span>{user.email}</span>
-                  <button onClick={handleClick}>Log out</button>
-                  </div>
+                  <MenuItem>
+                  <ProfileContainer>
+                    <Tooltip>{user.email}</Tooltip>
+                     <IconSpan>
+                     <Link to="/Profile">
+                      <PersonOutline/>
+                      </Link>
+                     </IconSpan>
+                  </ProfileContainer>
+                  
+                  <LeftPadding> </LeftPadding>
+                </MenuItem>
+                 </div>
                 )}
+                
+
+                {user && (
+                  <div>
+                <MenuItem>
+                  <Button onClick={handleClick}>Log out</Button>
+                 </MenuItem>
+                 </div>
+                )}
+
+
+                <MenuItem>
+
                 {!user && (
                 <MenuItem>
                 <Link to="/login"><Button>Login</Button></Link>

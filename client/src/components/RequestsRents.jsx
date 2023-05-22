@@ -181,7 +181,7 @@ const RequestsRents = ({request}) =>
       />
 
       <li>
-        <MessageLink to={`/messege?data=${request.sender_id}`}>Message</MessageLink>
+        <MessageLink to={`/message?data=${request.sender_id}`}>Message</MessageLink>
       </li>
 
       {show || request.owner_verify || updated ? (
@@ -199,7 +199,7 @@ const RequestsRents = ({request}) =>
       )}
 
       {(request.owner_verify || updated) && (
-        <ShowContractButton onClick={handleclick}>Show Contract</ShowContractButton>
+        <ShowContractButton onClick={handleShowContract}>Show Contract</ShowContractButton>
       )}
 
       {selected && <Contractforexc text={text} />}

@@ -172,7 +172,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const handleRemoveProduct = (productId) => {
-    // dispatch(removeProduct(productId));
+    dispatch(removeProduct(productId));
   };
 
 
@@ -193,7 +193,9 @@ const Cart = () => {
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
+          <Link to= "/messege">
           <TopButton type="filled">CHAT WITH OWNER</TopButton>
+          </Link>
         </Top>
 
         <Bottom>
@@ -250,7 +252,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
             </SummaryItem>
-            <Button>PROCEED NOW</Button>
+            <Button>CASH ON DELIVERY</Button>
           </Summary>
 
         </Bottom>

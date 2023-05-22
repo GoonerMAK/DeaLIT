@@ -44,7 +44,6 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 15px; 
-
   &:hover {
     background-color: rgb(10%, 60.2%, 70.2%);
   }
@@ -59,14 +58,14 @@ const Error = styled.div`
 const Rentrequests = (product) =>{
     const { user } = useAuthContext()
     const {Product} = product
-    
+
     const [returndate, setreturndate] = useState('')
     //price
     //prefer
     const [error, setError] = useState(null)
 
 
-    
+
 
     const handleSubmit  = async(e) => {
         handleimagesave()
@@ -77,7 +76,7 @@ const Rentrequests = (product) =>{
         console.log("product",objectid)
         e.preventDefault()
         //add to the backend part 
-        
+
         console.log(img)
         await axios.post('http://localhost:3000/api/Addition/exchangerequest', 
         {sender_id, owner_id, objectid,returndate}
@@ -106,7 +105,7 @@ const Rentrequests = (product) =>{
     return (
         <Form className="exchange" onSubmit={handleSubmit} encType='multipart/form-data'> 
             <Title>Place a request for exchange</Title>
-    
+
             <Label>Product Price:{Product.price}</Label>
             <Label>Set a preferred price?</Label>
             <Input 
@@ -116,7 +115,7 @@ const Rentrequests = (product) =>{
             // className={emptyFields.includes('title') ? 'error' : ''}
             />
           <Label>Description: </Label>
-        
+
           <Input 
             type="text"
             onChange={(e) => setdesc(e.target.value)}

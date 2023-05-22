@@ -71,7 +71,7 @@ const Pendingrentrequests = ({request}) => {
     const [show, setshow] = useState(false)
     const [owner, setowner] = useState('')
     const [sender, setsender] = useState('')
-    
+
     useEffect(() => {
       const getProducts = async () => {
         try {
@@ -124,7 +124,14 @@ const Pendingrentrequests = ({request}) => {
       
       setShowConfirmationRe(true);
     }
-    const text= `this is a contract for ${product.title}. Where Owner ID: ${request.owner_id} Name: ${owner.username}  Rented this product to  Reciever ID: ${request.sender_id} Name: ${sender.username}. And ${request.renttype} Rent is ${request.price}. \n This product was handovered in good condition `
+
+    const text= `this is a contract for ${product.title}. 
+    Where Owner ID: ${request.owner_id} Name: ${owner.username} 
+    Rented this product to Reciever ID: ${request.sender_id} 
+    Name: ${sender.username}. And ${request.renttype} t
+    Rent is ${request.price}. 
+    \n This product was handovered in good condition `
+    
     const handleConfirm = async(e) => {
       e.preventDefault()
       // Perform the action after confirmation

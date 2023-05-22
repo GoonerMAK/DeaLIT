@@ -95,7 +95,7 @@ const Sidebar = () => {
               <SidebarIcon>
                 <StorageIcon />
               </SidebarIcon>
-              <SidebarListItemText>My Rented Or Exchanged Products</SidebarListItemText>
+              <SidebarListItemText>My Rented or Exchanged Products</SidebarListItemText>
             </SidebarListItem>
             </StyledLink>
 
@@ -107,7 +107,7 @@ const Sidebar = () => {
               <SidebarListItemText>My Products</SidebarListItemText>
             </SidebarListItem>
             </StyledLink>
-            
+
             <StyledLink to = "/MyOrders">
             <SidebarListItem>
               <SidebarIcon>

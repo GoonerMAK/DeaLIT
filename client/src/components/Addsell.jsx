@@ -5,14 +5,16 @@ import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const Container = styled.div`
-  max-width: 650px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #e9e9e9;
-  padding: 50px;
+max-width: 650px;
+margin: 0 auto;
+padding: 20px;
+background-color: #e9e9e9;
+padding: 50px;
+border-radius:15px;
+margin-top: 20px;
+margin-bottom: 50px;
 
-  margin-top: 20px;
-  margin-bottom: 50px;
+box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
 `;
 
 const Title = styled.h3`
@@ -28,11 +30,13 @@ width: 100%;
 padding: 10px;
 border: 1px solid #ccc;
 margin-bottom: 10px;
+border-radius:5px;
 `;
 
 const FileInput = styled.input`
   width: 100%;
   padding: 10px;
+  border-radius:5px;
   border: 1px solid #ccc;
   background-color: #fff;
   margin-bottom: 10px;
@@ -41,6 +45,7 @@ const FileInput = styled.input`
 const Selection= styled.select`
 width: 100%;
 padding: 10px;
+border-radius:5px;
 border: 1px solid #ccc;
 margin-bottom: 10px;
 `;
@@ -50,6 +55,7 @@ const SubmitButton = styled.button`
   background-color: teal;
   color: #fff;
   border: none;
+  border-radius:5px;
   cursor: pointer;
   font-size: 15px;
   margin-top:10px;
@@ -69,8 +75,16 @@ const Addsell= ()=>{
     const [error, setError] = useState(null)
 
     const optionList=[{value:"Electronics", label:"Electronics"},
-    {value:"Daily use", label:"Daily use"}
-    ]
+  {value:"Pc Components", label:"Pc Components"},
+  {value:"Sports", label:"Sports"},
+  {value:"Home & Living", label:"Home & Living"},
+  {value:"Gadgets", label:"Gadgets"},
+  {value:"Laptop", label:"Laptop"},
+  {value:"Phone", label:"Phone"},
+  {value:"Education", label:"Education"},
+  {value:"Others", label:"Others"}
+  ]
+
 
     function handleSelect(data) {
         setcategories(data);

@@ -14,8 +14,8 @@ import AddSellItem from "./pages/AddSellItem";
 import EditProfile from "./pages/EditProfile";
 import MyOrders from "./pages/MyOrders";
 import PendingRequests from "./pages/PendingRequests";
-import RequestsExchanges from "./pages/RequestsExchanges"
 import Pendingrequest from "./pages/Pendingrequest"
+import RequestsExchange from "./pages/RequestsExchange";
 import MyexchangeRentproducts from "./pages/MyExchangeRentproducts";
 import Myproducts from "./pages/Myproducts"
 
@@ -67,7 +67,10 @@ const App = () => {
         <Route path="/PendingRequests" element={<PendingRequests/>}>
         </Route>
 
-        <Route path="/requestsExchange" element={ <RequestsExchanges/> }>
+        <Route path="/RequestsExchange" element={ <RequestsExchange/> }>
+        </Route>
+
+        <Route path="/RequestsExchanges" element={ <RequestsExchange/> }>
         </Route>
 
         <Route path="/pendingrequest" element={ <Pendingrequest/> }>
@@ -75,6 +78,10 @@ const App = () => {
 
         <Route path="/Myrentexchange" element={<MyexchangeRentproducts/>}>
         </Route>
+
+        <Route path="/myproducts" element={ <Myproducts/> }>
+        </Route>
+
         <Route 
               path="/login" 
               // element={<Login /> } 
@@ -94,8 +101,6 @@ const App = () => {
         <Route path="/messege"
           element={  <Messenger />}>
         </Route>
-
-        <Route path="/myproducts" element={ <Myproducts/> }></Route>
         
 
         {/* <Route path="/success">

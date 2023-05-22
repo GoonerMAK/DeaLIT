@@ -2,9 +2,17 @@ import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Pendingexchange from "../components/Pendingexchange"
 import Pendingrentrequests from "../components/Pendingrentresquests";
-
+import styled from "styled-components";
 import { useAuthContext } from '../hooks/useAuthContext'
 
+const Label = styled.label`
+  font-size: 19px;
+  color: black;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+`;
 
 const Pendingrequest=()=>{
     const upperuser = JSON.parse(localStorage.getItem('user'))
@@ -40,6 +48,7 @@ const Pendingrequest=()=>{
         getrequests();
       }, [user._id]);
 
+
       useEffect(() => {
         const getrentrequests = async () => {
           try {
@@ -65,6 +74,7 @@ const Pendingrequest=()=>{
         getrentrequests();
       }, [user._id]);
 
+
       return (
         <>
         {show?<>
@@ -74,7 +84,7 @@ const Pendingrequest=()=>{
           {rentrequests.map((request) => (
             <Pendingrentrequests  key={request._id} request={request} />
           ))}
-            </>:<label>no pending requests</label>}
+            </>:<Label>no pending requests</Label>}
         </>
         
       )
