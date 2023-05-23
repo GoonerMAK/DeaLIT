@@ -17,14 +17,18 @@ const Title = styled.h1`
   color: #333;
 `;
 
-const Price = styled.h1`
-  font-size: 24px;
-  color: #333;
-`;
-
-const RentType = styled.label`
+const Description = styled.label`
   font-size: 16px;
   color: black;
+`;
+
+const ReturnDate = styled.label`
+  font-size: 16px;
+  color: black;
+`;
+
+const Image = styled.img`
+  width: 200px;
 `;
 
 const MessageLink = styled(Link)`
@@ -59,11 +63,9 @@ const RejectButton = styled.button`
 `;
 
 
-const Pendingrentrequests = ({request}) => {
-
+const Pendingexchange = ({request}) => {
     const [product, setProduct] = useState('')
-    const [renttype, setrenttype] = useState(request.renttype)
-    const [price, setprice] = useState(request.proposed_price)
+    const [returndate, setreturndate] = useState(request.return_date)
     const [selected, setselected]=useState(false)
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [ShowConfirmationRe, setShowConfirmationRe] = useState(false);
@@ -80,11 +82,12 @@ const Pendingrentrequests = ({request}) => {
           );
           // console.log(res);
           setProduct(res.data);
+          console.log(returndate)
         } catch (err) {}
       };
       getProducts();
     }, [request.objectid]);
-
+    
     useEffect(() => {
       const getsender = async () => {
         try{
@@ -112,7 +115,8 @@ const Pendingrentrequests = ({request}) => {
     };
     getowner();
     },[request.owner_id]);
-    
+
+
     const handleclick = (e)=>{
       setselected(current => !current)
     }
@@ -125,18 +129,17 @@ const Pendingrentrequests = ({request}) => {
       setShowConfirmationRe(true);
     }
 
-    const text= `this is a contract for ${product.title}. 
-    Where Owner ID: ${request.owner_id} Name: ${owner.username} 
-    Rented this product to Reciever ID: ${request.sender_id} 
-    Name: ${sender.username}. And ${request.renttype} t
-    Rent is ${request.price}. 
-    \n This product was handovered in good condition `
-    
+    const text= `this is a contract for ${product.title}.
+     Where Owner ID: ${request.owner_id} 
+     Name: ${owner.username} and Reciever ID: ${request.sender_id} 
+     Name: ${sender.username} has agreed to exchange this product. 
+     \n This product was handovered in good condition `
+
     const handleConfirm = async(e) => {
       e.preventDefault()
       // Perform the action after confirmation
       console.log('Action confirmed');
-      await axios.post('http://localhost:3000/api/products/rentreq/sender/'+request._id, {text})
+      await axios.post('http://localhost:3000/api/products/exchangereq/sender/'+request._id, {text})
       .then((response) =>{
         console.log(response.data)
           setupdated(true)
@@ -157,7 +160,7 @@ const Pendingrentrequests = ({request}) => {
       e.preventDefault()
       // Perform the action after confirmation
       console.log('Action confirmed');
-      await axios.post('http://localhost:3000/api/products/rentreq/sender/reject/'+request._id)
+      await axios.post('http://localhost:3000/api/products/exchangereq/sender/reject/'+request._id)
       .then((response) =>{
         console.log(response)
           setupdated(false)
@@ -181,56 +184,71 @@ const Pendingrentrequests = ({request}) => {
       setShowConfirmation(false);
     };
 
-          
+    
     return (
         <>
-            <Wrapper>
-      {/* <Title>{product.title}</Title> */}
-      <Price>{request.proposed_price}</Price>
-      <RentType>{request.renttype}</RentType>
+
+      <Wrapper>
+      {/* <Title> <strong>Product: </strong> {product.title}</Title> */}
+      <Title> <strong>Request: </strong>  {request.title}</Title>
+      <Description> <strong>Description: </strong> {request.desc}</Description>
+      <ReturnDate> <strong>Return Date:</strong> {returndate}</ReturnDate>
+      <Image src={request.img} />
       <li>
-        <MessageLink to={`/messege?data=${request.owner_id}`}>
-          Message
-        </MessageLink>
+        <MessageLink to={`/messege?data=${request.owner_id}`}>Message</MessageLink>
       </li>
-      {updated ? (
-        <>
-          {request.owner_verify ? (
-            <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
-          ) : (
-            <label>Owner hasn't verified this product yet.</label>
-          )}
-          {request.owner_verify ? (
-            <RejectButton onClick={handlereject}>Reject</RejectButton>
-          ) : (
-            <label>Owner hasn't verified this product yet.</label>
-          )}
-        </>
+
+      {request.owner_verify ? (
+        <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
       ) : (
-        <label>You have already processed this</label>
+        <label>Owner hasn't verified this product yet.</label>
       )}
+
+      {request.owner_verify ? (
+        <RejectButton onClick={handlereject}>Reject</RejectButton>
+      ) : (
+        <label>Owner hasn't verified this product yet.</label>
+      )}
+
+
+      {(request.sender_verify&&request.owner_verify) ? (
+        <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+      ) : (
+        <label>You have already proceed it.</label>
+      )}
+
+      {(request.sender_verify&&request.owner_verify) ? (
+        <RejectButton onClick={handlereject}>Reject</RejectButton>
+      ) : (
+        <label>You have already proceed it</label>
+      )}
+
       {showConfirmation && (
         <ConfirmationDialog
-          message="Are you sure you want to verify? Once you verify, a contract will be generated and you can't undo it."
+          message="Are you sure you want to verify? Once you verify, the contract will be generated and you can't undo."
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />
       )}
+
       {ShowConfirmationRe && (
         <ConfirmationDialog
-          message="Are you sure you want to reject? Once you reject, you can't undo it."
+          message="Are you sure you want to reject? Once you reject, you can't undo."
           onConfirm={handleConfirmRe}
           onCancel={handleCancel}
         />
       )}
+
       {(request.sender_verify || updated) && (
         <button onClick={handleclick}>Show Contract</button>
       )}
+
       {selected && <Contractforexc text={text} />}
-    </Wrapper>
-        </>
+      </Wrapper>
+
+      </>
     )
 }
 
 
-export default Pendingrentrequests
+export default Pendingexchange

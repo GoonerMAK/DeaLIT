@@ -1,12 +1,14 @@
 const Product = require('../models/Products')
 const mongoose = require('mongoose')
 const Rentrequest= require('../models/rentrequest')
+const Exchangerequest= require('../models/exchange_request')
 
 
 
 // Add new Product for sell
 const addsellProduct = async (req, res) => {
-  const {user_email,title,desc ,img, price, categories} = req.body //, categories
+  const {user_email,title,desc ,img, price, selectedCategories} = req.body //, categories
+  const categories=selectedCategories
   console.log(categories)
   //let emptyFields = []
 
@@ -38,10 +40,10 @@ const addexchangeProduct = async (req, res) => {
   // const categories = req.body.categories
   // const exchangetype = req.body.exchangetype
   // const img = req.files.originalname
-  const {user_email, title,desc ,img, preference, categories, exchangetype} = req.body //, categories
-  console.log(req.body)
-  // console.log(req)
- 
+  const {user_email, title,desc ,img, preference, selectedCategories, exchangetype} = req.body //, categories
+  // console.log(req.body)
+  
+  const categories=selectedCategories
  
    console.log(user_email, title,desc,img, preference, categories, exchangetype)
   //let emptyFields = []
@@ -71,7 +73,8 @@ const addexchangeProduct = async (req, res) => {
 
 //add product for rent
 const addrentProduct = async (req, res) => {
-  const {user_email,title,desc ,img, price,  prefer, categories} = req.body //, categories
+  const {user_email,title,desc ,img, price,  prefer, selectedCategories} = req.body //, categories
+  const categories=selectedCategories
   console.log(categories)
   //let emptyFields = []
 
@@ -96,25 +99,43 @@ const addrentProduct = async (req, res) => {
 
 //sent request for exchange
 const exchangerequest = async (req, res) => {
-  const {} = req.body
-}
-
-const rentngerequest = async (req, res) => {
-  const {owner_email, sender_email, objectid, proposed_price} = req.body 
-  var return_date=req.body.return_date
-  console.log(req.body)
-  return_date= new Date(return_date)
-  console.log(return_date)
+  const {title, desc, img,owner_id, sender_id, objectid } = req.body
+  var return_date=req.body.returndate
+  // return_date= new Date(return_date)
   const owner_verify =false
   const sender_verify = false
-  console.log(owner_email, sender_email, objectid, return_date)
-  if(!owner_email|| !sender_email|| !objectid|| !return_date){
+  console.log(req.body)
+  if(!owner_id|| !sender_id|| !objectid|| !title || !desc){
     return res.status(400).json({ error: 'Please fill in all the fields' })
   }
   try {
     // const user_id = req.user._id
     
-    const rentrequest = await Rentrequest.create({owner_email, sender_email, objectid, return_date, proposed_price, owner_verify, sender_verify})
+    const exchangerequest = await Exchangerequest.create({title,desc,img,owner_id, sender_id, objectid, return_date, owner_verify, sender_verify})
+    console.log(exchangerequest) //, categories
+    res.status(200).json(exchangerequest)
+    console.log("Exchange kaj korse")
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+
+
+}
+
+//sent request for rent
+const rentngerequest = async (req, res) => {
+  const {owner_id, sender_id, renttype, objectid, proposed_price} = req.body 
+  console.log(req.body)
+  const owner_verify =false
+  const sender_verify = false
+  console.log(owner_id, sender_id, objectid, renttype)
+  if(!owner_id|| !sender_id|| !objectid|| !renttype){
+    return res.status(400).json({ error: 'Please fill in all the fields' })
+  }
+  try {
+    // const user_id = req.user._id
+    
+    const rentrequest = await Rentrequest.create({owner_id, sender_id, objectid, renttype, proposed_price, owner_verify, sender_verify})
     console.log(rentrequest) //, categories
     res.status(200).json(rentrequest)
   } catch (error) {
@@ -129,5 +150,6 @@ module.exports = {
   addsellProduct,
   addexchangeProduct,
   addrentProduct,
-  rentngerequest
+  rentngerequest,
+  exchangerequest
 }

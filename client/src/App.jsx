@@ -14,8 +14,12 @@ import AddSellItem from "./pages/AddSellItem";
 import EditProfile from "./pages/EditProfile";
 import MyOrders from "./pages/MyOrders";
 import PendingRequests from "./pages/PendingRequests";
+import Pendingrequest from "./pages/Pendingrequest"
+import RequestsExchange from "./pages/RequestsExchange";
+import MyexchangeRentproducts from "./pages/MyExchangeRentproducts";
+import Myproducts from "./pages/Myproducts"
 
-import { BrowserRouter as Router, Routes, Route, Redirect,Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Redirect, Navigate } from "react-router-dom";
 
 
 
@@ -61,6 +65,21 @@ const App = () => {
         </Route>
 
         <Route path="/PendingRequests" element={<PendingRequests/>}>
+        </Route>
+
+        <Route path="/RequestsExchange" element={ <RequestsExchange/> }>
+        </Route>
+
+        <Route path="/RequestsExchanges" element={ <RequestsExchange/> }>
+        </Route>
+
+        <Route path="/pendingrequest" element={ <Pendingrequest/> }>
+        </Route>
+
+        <Route path="/Myrentexchange" element={<MyexchangeRentproducts/>}>
+        </Route>
+
+        <Route path="/myproducts" element={ <Myproducts/> }>
         </Route>
 
         <Route 

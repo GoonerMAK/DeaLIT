@@ -90,12 +90,23 @@ const Sidebar = () => {
             </SidebarListItem>
             </StyledLink>
 
+            <StyledLink to = "/Myrentexchange">
+            <SidebarListItem>
+              <SidebarIcon>
+                <StorageIcon />
+              </SidebarIcon>
+              <SidebarListItemText>My Rented or Exchanged Products</SidebarListItemText>
+            </SidebarListItem>
+            </StyledLink>
+
+            <StyledLink to = "/myproducts">
             <SidebarListItem>
               <SidebarIcon>
                 <StorageIcon />
               </SidebarIcon>
               <SidebarListItemText>My Products</SidebarListItemText>
             </SidebarListItem>
+            </StyledLink>
 
             <StyledLink to = "/MyOrders">
             <SidebarListItem>

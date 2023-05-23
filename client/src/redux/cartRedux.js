@@ -22,7 +22,7 @@ const cartSlice = createSlice({
       if (productIndex !== -1) {
         const removedProduct = state.products[productIndex];
         state.products.splice(productIndex, 1);
-        state.quantity -= removedProduct.quantity;
+        state.quantity -= 1;
         state.total -= removedProduct.price * removedProduct.quantity;
       }
     }

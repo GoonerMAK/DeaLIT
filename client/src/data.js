@@ -4,7 +4,7 @@ export const sliderItems = [
       id: 1,
       img: "https://img.freepik.com/free-photo/modern-stationary-collection-arrangement_23-2149309643.jpg?w=740&t=st=1678795943~exp=1678796543~hmac=034898cb06abaf2ab236314e45cb404e33cd7a5eba6288a12c9ed55fbc2c2ed7",
       title: "ELECTRONICS",
-      desc: "ABUNDENCE OF NEW COLLECTIONS",
+      desc: "ABUNDENCE OF NEW COLLECTIONS RIGHT AT YOUR DOORSTEP",
       bg: "fbf0f4",
     },
     {
@@ -26,19 +26,19 @@ export const sliderItems = [
   export const categories = [
     {
       id: 1,
-      img: "https://i.ibb.co/0YCzPT5/electronics1.png",
-      title: "BUY ITEMS",
+      img: "https://i.ibb.co/y6GsM3G/electronics1.png" ,
+      title: "EXCHANGE ITEMS",
       cat:"Exchange",
     },
     {
       id: 2,
-      img: "https://i.ibb.co/Mh2Gfyp/camera1.png",
+      img: "https://i.ibb.co/ZxxYTRq/camera1.png" ,
       title: "RENT ITEMS",
       cat:"Rent",
     },
     {
       id: 3,
-      img: "https://i.ibb.co/d0WQnCx/cook1.png",
+      img: "https://i.ibb.co/N7dfxFV/cook1.png"  ,
       title: "TRADE ITEMS",
       cat:"Sell",
     },

@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
-const rentSchema = new mongoose.Schema(
+const exchanged = new mongoose.Schema(
   {
+    tittle: { type: String, required: true },
+    desc: { type: String, required: true },
+    img: { type: String, required: true },
     owner_id: {
         type: String,
         //required: true
@@ -10,12 +13,13 @@ const rentSchema = new mongoose.Schema(
         type: String,
         //required: true
       },
+
     objectid:{type: String},
-    renttype:{type: String},
-    rent_price:{type:Number},
+    return_date:{type: Date},
     contract:{type:String}
+    
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("rented", rentSchema);
+module.exports = mongoose.model("exchanged", exchanged);

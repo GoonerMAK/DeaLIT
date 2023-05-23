@@ -19,3 +19,5 @@
 9. npm install @reduxjs/toolkit --force (to use REDUX)
 
 10. npm install react-redux --force
+
+11. npm install @react-pdf/renderer --force

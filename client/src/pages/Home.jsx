@@ -9,6 +9,7 @@ import Products from "../components/Products";
 import Slider from "../components/Slider";
 
 
+
 /* rafce created this function */
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
       <Slider/>
 
       <Categories/>
+      <Products/>
       
       <Newsletter/>
       <Footer/>

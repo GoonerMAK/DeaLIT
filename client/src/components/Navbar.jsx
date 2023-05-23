@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const Container = styled.div`
     height: 65px;
+    background-color: aliceblue;
 `
 
 const Wrapper = styled.div`
@@ -215,9 +216,44 @@ const Navbar = () => {
 
                 <Right>
 
+                
+              {user&&
+
                 <MenuItem>
+                  <AddIconContainer>
+                    <Tooltip>Add Product</Tooltip>
+                    <Link to="/addition">
+                     <IconSpan>
+                      <Add/>
+                     </IconSpan>
+                     </Link>
+                  </AddIconContainer>
+                  
+                  <LeftPadding> </LeftPadding>
+                </MenuItem>  
+              }
+
+            {user&&
+                <MenuItem>
+                  <ChatContainer>
+                  <Link to="/messege">
+                    <Tooltip>Chats</Tooltip>
+                     <IconSpan>
+                      <Chat/>
+                     </IconSpan>
+                     </Link>
+                  </ChatContainer>
+                  
+                  <LeftPadding> </LeftPadding>
+                </MenuItem>
+              }
+              
+
+                {user && (
+                  <div>
+                  <MenuItem>
                   <ProfileContainer>
-                    <Tooltip>Profile</Tooltip>
+                    <Tooltip>{user.email}</Tooltip>
                      <IconSpan>
                      <Link to="/Profile">
                       <PersonOutline/>
@@ -227,37 +263,21 @@ const Navbar = () => {
                   
                   <LeftPadding> </LeftPadding>
                 </MenuItem>
-
-                <MenuItem>
-                  <AddIconContainer>
-                    <Tooltip>Add Product</Tooltip>
-                     <IconSpan>
-                      <Add/>
-                     </IconSpan>
-                  </AddIconContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>  
-
-                <MenuItem>
-                  <ChatContainer>
-                    <Tooltip>Chats</Tooltip>
-                     <IconSpan>
-                      <Chat/>
-                     </IconSpan>
-                  </ChatContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>
-
-                <MenuItem>
+                 </div>
+                )}
+                
 
                 {user && (
                   <div>
-                  <span>{user.email}</span>
-                  <button onClick={handleClick}>Log out</button>
-                  </div>
+                <MenuItem>
+                  <Button onClick={handleClick}>Log out</Button>
+                 </MenuItem>
+                 </div>
                 )}
+
+
+                <MenuItem>
+
                 {!user && (
                 <MenuItem>
                 <Link to="/login"><Button>Login</Button></Link>

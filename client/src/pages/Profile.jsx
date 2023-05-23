@@ -77,6 +77,8 @@ const Icon = styled.span`
 
 
 const Profile = () => {
+  const upperuser = JSON.parse(localStorage.getItem('user'))
+  const user=upperuser.user
     
   return (
     <>
@@ -98,28 +100,28 @@ const Profile = () => {
                   <PersonIcon />
                 </Icon>
                 <Label className="label">Name</Label>
-                <Text className="text">John Doe</Text>
+                <Text className="text">{user.username}</Text>
               </div>
               <div className="info">
                 <Icon className="icon">
                   <EmailIcon />
                 </Icon>
                 <Label className="label">Email</Label>
-                <Text className="text">johndoe@gmail.com</Text>
+                <Text className="text">{user.email}</Text>
               </div>
               <div className="info">
                 <Icon className="icon">
                   <PhoneIcon />
                 </Icon>
                 <Label className="label">Phone</Label>
-                <Text className="text">12345678</Text>
+                <Text className="text">{user.Phone}</Text>
               </div>
               <div className="info">
                 <Icon className="icon">
                   <AssignmentIndIcon />
                 </Icon>
                 <Label className="label">NID</Label>
-                <Text className="text">12345678</Text>
+                <Text className="text">{user.NID}</Text>
               </div>
             </ProfileInfo>
           </div>

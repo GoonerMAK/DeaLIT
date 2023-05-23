@@ -1,6 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -9,6 +9,8 @@ import Newsletter from "../components/Newsletter";
 import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import Exchangerequest from "../components/Exchangerequest"
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -47,7 +49,7 @@ const Price = styled.span`
 
 const FilterContainer = styled.div`
   width: 50%;
-  margin: 30px 0px;
+  margin: 10px 0px;
   display: flex;
   justify-content: space-between;
 `;
@@ -105,6 +107,7 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
+  width: 15%;
   padding: 15px;
   border: 3px solid teal;
   background-color: white;
@@ -116,27 +119,9 @@ const Button = styled.button`
   }
 `;
 
-const Arrow = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: #fff7f7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: ${(props) => props.direction === "left" && "10px"};
-  right: ${(props) => props.direction === "right" && "10px"};
-  margin: auto;
-  cursor: pointer;
-  opacity: 0.5;
-  z-index: 2;
-`;
 
 
-const Product = ({}) => {
+const Product = () => {
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -144,7 +129,13 @@ const Product = ({}) => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const [isexchange, setisexchange]= useState(false)
+  const [isrent, setisrent]= useState(false)
+  const [owner, setowner]=useState('')
   const dispatch = useDispatch();
+
+  const upperuser = JSON.parse(localStorage.getItem('user'))
+  const user=upperuser.user
 
 
   useEffect(() => {
@@ -156,6 +147,56 @@ const Product = ({}) => {
     };
     getProduct();
   }, [id]);
+
+
+  useEffect(() => {
+    const getuser = async () => {
+      if(product){
+      try{
+        const res = await axios.get('http://localhost:3000/api/user/find/'+product.user_email)
+        setowner(res.data)
+        console.log(res.data)
+      }catch(error)
+      {
+        console.log(error)
+      }
+    }
+  };
+  getuser();
+  },[product.user_email]);
+
+
+
+  const handleexchange = (e)=>{
+      setisexchange(current => !current)
+  }
+
+  const handlerent = async(e) => {
+    e.preventDefault()
+    const owner_id=owner._id
+    const sender_id=user._id 
+    console.log("sender",owner_id)
+    const objectid=product._id
+    console.log("product",objectid)
+    const proposed_price=product.price
+    const renttype=product.prefer
+    await axios.post('http://localhost:3000/api/Addition/rentrequest', 
+        {sender_id, owner_id, objectid,proposed_price,renttype}
+        ).then((response)=>{
+            console.log(response)
+            setisrent(true)
+          }).catch((error)=>{
+            if (error.response) {
+              console.log(error.response);
+              console.log("server responded");
+            } else if (error.request) {
+              console.log("network error");
+            } else {
+              console.log(error);
+            }
+          })
+  }
+
 
   const handleQuantity = (type) => {
     if (type === "dec")  // decrease 
@@ -189,20 +230,40 @@ const Product = ({}) => {
         </ImgContainer>
 
         <InfoContainer>
-          <Title>{product.title}</Title>
+          <Title> <strong> Product Name: </strong> {product.title}</Title>
+          <Desc> <strong> Description: </strong> {product.desc} </Desc>
           <Desc>
-            {product.desc}
+          {product.categories && product.categories.map((category, index) => (
+          <span key={index}>
+          {category}
+          {index !== product.categories.length - 1 && ', '}
+          </span>
+          ))}
           </Desc>
-          <Price>{product.price}/=</Price>
+          {product.price && <Price>{product.price}/=</Price>}
+
+          {product.exchangetype && <Desc>
+            {product.exchangetype}
+          </Desc>}
+          {product.prefer && <Desc>
+            {product.prefer}
+          </Desc>}
+          <Title>Owner name: {owner.username}</Title>
+
+          <FilterContainer> </FilterContainer> 
+
+          <Button>
+            <Link to= {`/messege?data=${product.user_email}`}>Message</Link>
+          </Button>
 
           <FilterContainer>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Color</FilterTitle>
               <FilterColor color="black" />
               <FilterColor color="darkblue" />
               <FilterColor color="gray" />
-            </Filter>
-            {/* <Filter>
+            </Filter> }
+            { <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
                 <FilterSizeOption>XS</FilterSizeOption>
@@ -212,7 +273,13 @@ const Product = ({}) => {
                 <FilterSizeOption>XL</FilterSizeOption>
               </FilterSize>
             </Filter> */}
-          </FilterContainer>
+          </FilterContainer> 
+
+
+
+          {product.purpose==="Exchange"?<Button onClick={handleexchange}>Exchange</Button>:null}
+          {product.purpose==="Rent"?<Button onClick={handlerent}>Rent</Button>:null}
+          {product.purpose==="Sell"?
 
           <AddContainer>
             <AmountContainer>
@@ -221,7 +288,10 @@ const Product = ({}) => {
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
             <Button onClick={handleClick} >ADD TO CART</Button>
-          </AddContainer>
+            
+          </AddContainer>:null}
+        {isexchange&&<Exchangerequest Product={product} />}
+        {isrent&&<label>rent request has been sent</label>}
 
         </InfoContainer>
 
